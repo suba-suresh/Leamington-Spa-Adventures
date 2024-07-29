@@ -1,1 +1,1 @@
-# Leamington-Spa---Adventures
+# Leamington-Spa-Adventures
