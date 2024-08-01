@@ -1,13 +1,74 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Django-Setup</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-</head>
-<body>
-    <h1>If this heading is red static files are being served.</h1>
-</body>
-</html>
+{% extends "base.html" %}
+{% block title %}Leamington Spa Adventures - Home{% endblock %}
+
+{% block content %}
+<!-- Carousel start -->
+<div class="carousel slide" data-bs-ride="carousel" id="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item carousel-image bg-img-1 active">
+      <div class="carousel-caption d-md-block" data-aos="fade-up">
+        <h1 class="display-2">Breathtaking Landscapes</h1>
+        <p class="display-6">Nature's masterpiece in all shades of green.</p>
+      </div>
+    </div>
+    <div class="carousel-item carousel-image bg-img-2">
+      <div class="carousel-caption d-md-block" data-aos="fade-up">
+        <h1 class="display-2">The beauty of the wild</h1>
+        <p class="display-6">In the heart of nature, where every living thing has a story to tell.</p>
+      </div>
+    </div>
+    <div class="carousel-item carousel-image bg-img-3">
+      <div class="carousel-caption d-md-block" data-aos="fade-up">
+        <h1 class="display-2">Travel</h1>
+        <p class="display-6">Discovering the world, one adventure at a time</p>
+      </div>
+    </div>    
+    <div class="carousel-item carousel-image bg-img-4">
+      <div class="carousel-caption d-md-block" data-aos="fade-up">
+        <h1 class="display-2">Architecture</h1>
+        <p class="display-6">Where the city lights shine bright</p>
+      </div>
+    </div>
+  </div>
+  <div>
+    <a class="carousel-control-prev" href="#carousel" role="button" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon"></span><span class="visually-hidden">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carousel" role="button" data-bs-slide="next">
+      <span class="carousel-control-next-icon"></span><span class="visually-hidden">Next</span>
+    </a>
+  </div>
+</div>
+<!-- Carousel end -->
+<div class="wrapper">
+  <!-- Hero container start -->
+  <main>
+    <div class="container-fluid hero-container">
+      <div class="container-lg my-5 py-5">
+        <div class="row flex-lg-row-reverse align-items-center g-0 py-5">
+          <div class="col-10 col-sm-8 col-lg-6 ps-5" data-aos="fade-left">
+            <img
+              src="https://res.cloudinary.com/ddvsgi5xw/image/upload/v1676912223/BHK_3293-obrabiane_2048px_tjr6h3.webp"
+              class="d-block mx-lg-auto img-fluid rounded shadow my-5" alt="Group of photographers on the beach"
+              width="700" loading="lazy">
+          </div>
+          <div class="col-lg-6" data-aos="fade-right">
+            <h1 class="display-4 fw-bold lh-2 mb-4">Join us today and share your adventures</h1>
+            <p class="lead lh-lg my-4 py-4">
+              We believe that every moment is worth capturing, and we're on a mission to help photography
+              enthusiasts share their adventures with the world. Whether you're a professional photographer or a
+              hobbyist, we invite you to join our community and share your photos, stories, and tips with fellow
+              enthusiasts.
+            </p>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+              <a href="#" class="btn btn-body btn-lg px-4 me-md-2">Sign up</a>
+              <a href="#" class="btn btn-body-1 btn-outline-green-1 btn-lg px-4">Visit blog</a>
+          </div>          
+        </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <!-- Hero container end -->
+</div>
+{% endblock %}
