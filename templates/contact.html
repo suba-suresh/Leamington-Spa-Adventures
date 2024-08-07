@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Leamington Spa Adventures - Contact{% endblock %}
+{% block content %}
+<div class="wrapper my-5 py-5">
+  <main>
+    <div class="container-md container-contact bg-white rounded-3 box-shadow" data-aos="fade-down">
+      <div class="row g-0">
+        <div class="col col-md mx-4 py-5">
+          <h3 class="card-title mb-3">Contact Us</h3>
+          <form onsubmit="return sendMail(this);">
+            <div class="form-floating my-3">
+              <input type="text" name="name" id="fullname" class="form-control" placeholder="John Doe"
+                {% if user.is_authenticated %}value="{{ user.username }}" {% endif %} required>
+              <label for="fullname">Your Name:</label>
+            </div>
+            <div class="form-floating my-3">
+              {% if user.is_authenticated %}
+              <input type="email" name="email" id="emailaddress" class="form-control" placeholder="email@example.com"
+                value="{{ user.email }}" required>
+              {% else %}
+              <input type="email" name="email" id="emailaddress" class="form-control" placeholder="email@example.com"
+                required>
+              {% endif %}
+              <label for="emailaddress">Email Address:</label>
+            </div>
+            <div class="form-floating my-3">
+              <textarea name="message" id="messagebody" class="form-control" placeholder="Type your message here"
+                style="height: 300px;" required></textarea>
+              <label for="messagebody">Message:</label>
+            </div>
+            <button type="submit" class="btn btn-green mt-1"><i class="fa-regular fa-paper-plane"></i> Submit</button>
+            <div class="d-none alert mt-2" id="contactFormAlert" role="alert"></div>
+          </form>
+        </div>
+        <div class="col col-md mx-4 py-5">
+          <h3 class="card-title mb-3">Office</h3>
+          <address>
+            Royal Pump Rooms, Parade<br>
+            Royal Leamington Spa<br>
+            Phone: <a href="tel:+441926456940" class="text-link">01926 456 940</a><br>
+          </address>
+          <div class="mt-4">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3115.931695872745!2d-1.5375802245398785!3d52.28958877976827!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487730ec7f78c6d5%3A0x7d4a646a4b2cbe7e!2sRoyal%20Pump%20Rooms!5e0!3m2!1sen!2suk!4v1628275815920!5m2!1sen!2suk"
+              class="google-map rounded-3" style="border:0;" allowfullscreen loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+{% endblock %}

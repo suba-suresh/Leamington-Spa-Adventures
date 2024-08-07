@@ -1,0 +1,22 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container my-5">
+    <h1>Your Drafts</h1>
+    <div class="row">
+        {% for draft in drafts %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-text">{{ draft.content|slice:":100" }}...</p>
+                        <a href="{% url 'edit_draft' draft.id %}" class="btn btn-primary">Edit Draft</a>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <p>No drafts found.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

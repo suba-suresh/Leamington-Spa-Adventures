@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Update Profile{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <h2>Update Personal Details</h2>
+  <form action="{% url 'update_profile' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="username" class="form-label"></label>
+      {{ user_form.username|as_crispy_field }}
+    </div>
+    <div class="mb-3">
+      <label for="bio" class="form-label"></label>
+      {{ profile_form.bio|as_crispy_field }}
+    </div>
+    <div class="mb-3">
+      <label for="profile_image" class="form-label"> </label>
+      {{ profile_form.profile_image|as_crispy_field }}
+    </div>
+    <button type="submit" class="btn btn-success">Update Profile</button>
+  </form>
+</div>
+{% endblock %}

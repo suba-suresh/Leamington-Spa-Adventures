@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5 pt-5">
+    <div class="text-center">
+        <h2>You have been signed out.</h2>
+        <p>Thank you for visiting. You have successfully signed out of your account.</p>
+        <a href="{% url 'accounts_login' %}" class="btn btn-primary">Log in again</a>
+        <a href="{% url 'index' %}" class="btn btn-secondary">Go to Home</a>
+    </div>
+</div>
+{% endblock %}
