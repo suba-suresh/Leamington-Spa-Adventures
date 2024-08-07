@@ -131,8 +131,8 @@ button {
 /* Navbar Button Styles */
 .btn-green {
     color: #0d0000;
-    background-color: #e68e0ac7; /* Ensure there's a background color */
-    border-color: #e68e0ac7; /* Border color to match */
+    background-color: #e68e0ac7;
+    border-color: #e68e0ac7;
 }
 
 .btn-green:hover {
@@ -153,56 +153,56 @@ button {
 .btn-outline-green-1 {
     color: #fff;
     background-color: #005f08cc;
-    border: none; /* Ensure no border */
+    border: none;
 }
 
 /* Body Button Styles */
 .btn-body {
-    color: #fff; /* Font color white */
-    background-color: #f57c00; /* Orange background color */
-    border: 1px solid #f57c00; /* Border matching background color */
-    text-decoration: none; /* Remove underline for links */
-    display: inline-block; /* Ensure button-like appearance */
-    padding: 10px 20px; /* Add padding for better appearance */
-    transition: all 0.3s ease; /* Smooth transition for hover effects */
+    color: #fff;
+    background-color: #f57c00;
+    border: 1px solid #f57c00;
+    text-decoration: none;
+    display: inline-block;
+    padding: 10px 20px;
+    transition: all 0.3s ease;
 }
 
 .btn-body:hover {
-    color: #fff; /* Font color remains white on hover */
-    background-color: #f57c00; /* Background remains orange on hover */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect on hover */
+    color: #fff;
+    background-color: #f57c00;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .btn-body-1 {
-    color: #fff; /* Font color white */
-    background-color: #005f08cc; /* Orange background color */
-    border: 1px solid #005f08cc; /* Border matching background color */
-    text-decoration: none; /* Remove underline for links */
-    display: inline-block; /* Ensure button-like appearance */
-    padding: 10px 20px; /* Add padding for better appearance */
-    transition: all 0.3s ease; /* Smooth transition for hover effects */
+    color: #fff;
+    background-color: #005f08cc;
+    border: 1px solid #005f08cc;
+    text-decoration: none;
+    display: inline-block;
+    padding: 10px 20px;
+    transition: all 0.3s ease;
 }
 
 .btn-body-1:hover {
-    color: #fff; /* Font color remains white on hover */
-    background-color: #005f08cc; /* Background remains orange on hover */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect on hover */
+    color: #fff;
+    background-color: #005f08cc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.btn-secondary  {
-    color: #fff; /* Font color white */
-    background-color: #005f08cc; /* Orange background color */
-    border: 1px solid #005f08cc; /* Border matching background color */
-    text-decoration: none; /* Remove underline for links */
-    display: inline-block; /* Ensure button-like appearance */
-    padding: 10px 20px; /* Add padding for better appearance */
-    transition: all 0.3s ease; /* Smooth transition for hover effects */
+.btn-secondary {
+    color: #fff;
+    background-color: #005f08cc;
+    border: 1px solid #005f08cc;
+    text-decoration: none;
+    display: inline-block;
+    padding: 10px 20px;
+    transition: all 0.3s ease;
 }
 
-.btn-secondary :hover {
-    color: #fff; /* Font color remains white on hover */
-    background-color: #005f08cc; /* Background remains orange on hover */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect on hover */
+.btn-secondary:hover {
+    color: #fff;
+    background-color: #003d05; /* Darker shade for hover effect */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* Bootstrap carousel - home page */
@@ -252,168 +252,10 @@ button {
 
 /* Additional styles for post cards */
 .card {
-    border: 1px solid #e68e0ac7; /* Border color to match theme */
-    border-radius: 8px; /* Rounded corners for cards */
-    overflow: hidden; /* Ensure images do not overflow */
-}
-
-.card-img-top {
-    height: 200px; /* Set a fixed height for images */
-    object-fit: cover; /* Ensure images cover the area without stretching */
-}
-
-.card-body {
-    background-color: #fff; /* Background color for card body */
-}
-
-.card-title {
-    font-family: 'Gloock', serif; /* Title font styling */
-    color: #04100D; /* Dark text color for better readability */
-}
-
-.card-text {
-    color: hsl(0, 2%, 9%); /* Lighter text color for descriptions */
-}
-
-/* Additional spacing */
-.mb-4 {
-    margin-bottom: 1.5rem; /* Adjust bottom margin for spacing */
-}
-
-.form-group {
-    color: black;
-}
-
-.accounts-body h3,
-.accounts-body p {
-    color: black;
-}
-
-/* Ensure paragraphs are black */
-p {
-    color: black;
-}
-
-.google-map {
-    border: 0;
-    width: 100%;
-    height: 500px; /* Adjust height as needed */
-    border-radius: 0.5rem; /* Optional: Adds rounded corners */
-  }
-  
-  /* Comment Section */
-
-  .comment {
-    padding: 10px;
-    background-color: #f9f9f9;
-    border-radius: 5px;
-    margin-bottom: 10px;
-  }
-  
-  .comments-section {
-    margin-top: 20px;
-  }
-  
-  .comment form {
-    display: inline;
-  }
-  
-/* Footer */
-.footer {
-    padding: 2rem 0;
-    margin-top: auto;
-    background-color: #fff; /* Ensure the footer background color */
-    color: #e68e0ac7; /* Apply the text color */
-}
-
-/* Footer Text Color */
-.footer h5,
-.footer p,
-.footer address,
-.footer a {
-    color: #e68e0ac7; /* Set the text color for headings, paragraphs, and links */
-}
-
-/* Footer Links */
-.footer a {
-    text-decoration: none; /* Remove underline from links */
-}
-
-.footer a:hover {
-    text-decoration: underline; /* Add underline on hover for better usability */
-}
-
-/* Footer Address and Navigation */
-.footer-address,
-.footer-nav {
-    font-size: medium;
-}
-.footer-nav ul {
-    display: inline-block;
-    margin: 0 10px;
-}
-
-/* Social Icons in Footer */
-.social-icon {
-    font-size: 1.5em;
-    padding: 5px 5px;
-    color: #003718; /* Default color for social icons */
-}
-
-.social-icon:hover {
-    color: #005f08cc; /* Hover color for social icons */
-}
-
-/* Notification Bar */
-.notification {
-    position: fixed;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100%;
-    padding: 15px;
-    border-radius: 5px;
-    font-size: 16px;
-    z-index: 9999;
-    transition: opacity 0.5s ease, top 0.5s ease;
-    opacity: 0;
-}
-
-.notification.show {
-    opacity: 1;
-    top: 10px;
-}
-
-.notification.success {
-    background-color: #4CAF50;
-    color: white;
-}
-
-.notification.error {
-    background-color: #f44336;
-    color: white;
-}
-
-.notification.warning {
-    background-color: #ff9800;
-    color: white;
-}
-
-/* General Container Styles */
-.container {
-    max-width: 1200px;
-}
-
-/* Dropdown Styles */
-.dropdown-menu {
-    min-width: 200px;
-}
-
-/* Card Styles */
-.card {
     border: 1px solid #e68e0ac7;
     border-radius: 8px;
     overflow: hidden;
+    margin-bottom: 1.5rem; /* Adjust bottom margin for spacing */
 }
 
 .card-img-top {
@@ -423,6 +265,8 @@ p {
 
 .card-body {
     background-color: #fff;
+    display: flex;
+    flex-direction: column; /* Ensure buttons align at the bottom */
 }
 
 .card-title {
@@ -434,56 +278,118 @@ p {
     color: hsl(0, 2%, 9%);
 }
 
-.btn-primary {
-    background-color: #005f08cc;
-    border-color: #005f08cc;
+/* Ensure paragraphs are black */
+p {
+    color: black;
 }
 
-.btn-primary:hover {
-    background-color: #004d06;
-    border-color: #004d06;
+/* Additional spacing */
+.mb-4 {
+    margin-bottom: 1.5rem;
 }
 
-/* Profile Form Styles */
-.form-label {
-    font-weight: bold;
+/* Form and Profile Styles */
+.form-group {
+    color: black;
+}
+
+.accounts-body h3,
+.accounts-body p {
+    color: black;
 }
 
 textarea {
     resize: vertical;
 }
 
-/* Responsive Grid */
-@media (max-width: 767.98px) {
-    .card {
-        margin-bottom: 1rem;
-    }
+
+/* Google Map */
+.google-map {
+    border: 0;
+    width: 100%;
+    height: 500px;
+    border-radius: 0.5rem;
 }
 
-@media (min-width: 768px) {
-    .card {
-        margin-bottom: 1.5rem;
-    }
+/* Comment Section */
+.comment {
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    margin-bottom: 10px;
 }
 
-/* Responsive adjustments */
-@media (max-width: 767px) {
-    .navbar-collapse {
-        flex-basis: 100%;
-        -ms-flex-order: 1;
-        order: 1;
-        margin-top: 0;
-    }
-
-    .navbar-nav {
-        margin: 0;
-        text-align: center;
-    }
-
-    .nav-link {
-        padding-right: 0;
-        padding-left: 0;
-    }
+.comments-section {
+    margin-top: 20px;
 }
 
+.comment form {
+    display: inline;
+}
 
+/* Pagination Button Styles */
+.page-link {
+    color: #fff; /* Dark color for text */
+    background-color: #005f08cc; /* Green background color */
+    border-color: #005f08cc; /* Border color to match background */
+    padding: 10px 20px; /* Padding for better appearance */
+    transition: all 0.3s ease; /* Smooth transition for hover effects */
+}
+
+.page-link:hover {
+    color: #fff; /* White text color on hover */
+    background-color: #f57c00; /* Orange background color on hover */
+    border-color: #f57c00; /* Border color to match hover background */
+}
+
+/* Footer */
+.footer {
+    padding: 2rem 0;
+    margin-top: auto;
+    background-color: #fff;
+    color: #e68e0ac7;
+}
+
+.footer h5,
+.footer p,
+.footer address,
+.footer a {
+    color: #e68e0ac7;
+}
+
+.footer a {
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+.footer-address,
+.footer-nav {
+    font-size: medium;
+}
+
+.footer-nav ul {
+    display: inline-block;
+    margin: 0 10px;
+}
+
+/* Social Icons in Footer */
+.social-icon {
+    font-size: 1.5em;
+    padding: 5px 5px;
+    color: #003718;
+}
+
+.social-icon:hover {
+    color: #005f08cc;
+}
+
+/* Notification Bar */
+.notification-bar {
+    background-color: #005f08cc;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+}

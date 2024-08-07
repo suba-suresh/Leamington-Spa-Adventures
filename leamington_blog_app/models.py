@@ -28,8 +28,8 @@ class Post(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = self.generate_unique_slug()
-        super(Post, self).save(*args, **kwargs)
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
 
     def generate_unique_slug(self):
         base_slug = slugify(self.title)
@@ -41,8 +41,10 @@ class Post(models.Model):
     def get_likes_count(self):
         return self.like_set.count()
 
+    # def __str__(self):
+    #     return self.title 
     def __str__(self):
-        return self.title or 'Untitled Post'
+        return self.title if self.title else "Untitled Post"
     
 
 class Comment(models.Model):
@@ -93,12 +95,3 @@ def create_or_update_profile(sender, instance, created, **kwargs):
         Profile.objects.create(user=instance)
     else:
         instance.profile.save()
-
-# Optional: Ensure that a Profile is created for existing users who don't have one
-def create_profiles_for_existing_users():
-    for user in User.objects.all():
-        if not hasattr(user, 'profile'):
-            Profile.objects.create(user=user)
-
-# Run this function manually if you have existing users who need profiles
-# create_profiles_for_existing_users()

@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError 
 from .models import Post, Comment, Profile
 
 
@@ -25,24 +26,37 @@ class CustomAuthenticationForm(AuthenticationForm):
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ['title', 'description', 'image', 'tags']
+        fields = ['title', 'description', 'image', 'slug', 'tags']
         widgets = {
             'tags': forms.TextInput(attrs={'placeholder': 'Add tags, separated by commas'}),
         }
 
     def clean_slug(self):
+        title = self.cleaned_data.get('title')
+        if not title:
+            raise ValidationError("Title must be provided to generate a slug.")
+        
         slug = self.cleaned_data.get('slug')
         if not slug:
-            return slugify(self.cleaned_data.get('title'))
+            slug = slugify(title)
+        
         return slug
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', None)
-        super(PostForm, self).__init__(*args, **kwargs)
+        super(PostForm, self).__init__(*args, **kwargs)     
+        
+        # Debugging: Print the current fields
+        print(f"Fields before user check: {self.fields.keys()}")
 
         if user and not user.is_staff:
+            # Safely remove fields for non-staff users
             self.fields.pop('slug', None)
             self.fields.pop('status', None)
+            
+        
+        # Debugging: Print the fields after conditional logic
+        print(f"Fields after user check: {self.fields.keys()}")
 
 class CommentForm(forms.ModelForm):
     class Meta:
