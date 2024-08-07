@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Add New Post{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <h1 class="mb-4">Add New Post</h1>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Add Post</button>
+  </form>
+  <a href="{% url 'user_account' %}" class="btn btn-secondary mt-3">Back to My Account</a>
+</div>
+{% endblock %}
+
+<!-- add_post.html -->
+<script>
+  let saveDraftTimeout;
+  const saveDraftInterval = 10000; // Save draft every 10 seconds
+
+  function saveDraft() {
+      const content = document.querySelector('#post_content').value;
+      fetch("{% url 'save_draft' %}", {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+              'X-CSRFToken': '{{ csrf_token }}'
+          },
+          body: JSON.stringify({ content: content })
+      })
+      .then(response => response.json())
+      .then(data => {
+          if (data.status === 'success') {
+              console.log('Draft saved successfully.');
+          } else {
+              console.log('Failed to save draft.');
+          }
+      });
+  }
+
+  document.querySelector('#post_content').addEventListener('input', () => {
+      clearTimeout(saveDraftTimeout);
+      saveDraftTimeout = setTimeout(saveDraft, saveDraftInterval);
+  });
+</script>
+

@@ -1,0 +1,18 @@
+<!-- templates/admin/reject_post.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container my-5">
+    <h1>Reject Post</h1>
+    <div class="card">
+        <div class="card-body">
+            <h2 class="card-title">{{ post.title }}</h2>
+            <p class="card-text">{{ post.description }}</p>
+            <form method="post" action="{% url 'reject_post' post.slug %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Reject</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block title %}Leamington Spa Adventures - Blog{% endblock %}
+
+{% block content %}
+<div class="wrapper mt-5 pt-5">
+  <article>
+    <div class="container">
+      {% if tag %}
+      <div class="container rounded-3 accent-green border border-success p-1 mt-4">
+        <h4 class="text-center m-0">You are browsing all posts with tag "{{ tag }}"</h4>
+      </div>
+      {% endif %}
+      <div class="row">
+        <div class="col-12 left">
+          <div class="row">
+            {% for post in post_list %}
+            <div class="col-12 my-4">
+              <div class="card" data-aos="zoom-in-up">
+                <div class="card-body box-shadow">
+                  <div class="image-container">
+                    {% if post.image %}
+                    <img class="card-img-top card-img-blog" src="{{ post.image.url }}"
+                      alt="Featured image for article {{ post.title }}">
+                    {% else %}
+                    <img class="card-img-top" src="https://res.cloudinary.com/ddvsgi5xw/image/upload/v1676809771/placeholder_map_qnsegu.webp"
+                      alt="Placeholder image for article {{ post.title }}">
+                    {% endif %}
+                    <div class="image-caption">
+                      <i class="fa-solid fa-earth-europe"></i> {{ post.location }}
+                    </div>
+                  </div>
+                  <a href="{% url 'full_post' post.slug %}" class="stretched-link post-link">
+                    <h2 class="card-title mt-3">{{ post.title }}</h2>
+                  </a>
+                  <p class="post-excerpt">{{ post.description|truncatewords:30 }}</p>
+                  <hr>
+                  <p class="post-details text-muted mt-1 mb-1">
+                    <i class="fa-regular fa-pen-to-square"></i> {{ post.author.username }} |
+                    <i class="fa-regular fa-calendar-check"></i> {{ post.created_at }} |
+                    <i class="far fa-heart"></i> {{ post.number_of_likes }} |
+                    <i class="far fa-comments"></i> {{ post.number_of_comments }}
+                  </p>
+                </div>
+              </div>
+            </div>
+            {% if forloop.counter|divisibleby:5 %}
+          </div>
+          <div class="row">
+            {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- Pagination Controls -->
+  <nav aria-label="Page navigation">
+    <ul class="pagination">
+        {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page=1" aria-label="First">
+                    <span aria-hidden="true">&laquo;&laquo;</span>
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+        {% endif %}
+        
+        {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+                <li class="page-item active" aria-current="page">
+                    <span class="page-link">{{ num }} <span class="sr-only">(current)</span></span>
+                </li>
+            {% else %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                </li>
+            {% endif %}
+        {% endfor %}
+        
+        {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Last">
+                    <span aria-hidden="true">&raquo;&raquo;</span>
+                </a>
+            </li>
+        {% endif %}
+    </ul>
+</nav>
+</div>
+{% endblock %}
