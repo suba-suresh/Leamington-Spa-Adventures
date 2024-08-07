@@ -23,6 +23,12 @@ logger = logging.getLogger(__name__)
 def index(request):
     return render(request, 'index.html')
 
+def contact(request):
+    return render(request, 'contact.html')
+
+def about(request):
+    return render(request, 'about.html') 
+
 def blog_list(request):
     post_list = Post.objects.all()
     post_list = Post.objects.filter(status='approved').order_by('-created_at')
@@ -48,7 +54,6 @@ def populate_slugs(request):
         post.save()
         logger.debug(f'Populated slug for post: {post.title} with slug: {post.slug}')
     return HttpResponse("Slugs populated successfully.")
-
     
 @login_required
 def full_post(request, slug):
@@ -207,21 +212,21 @@ def add_comment(request, slug):
         content = request.POST.get('content')
         if content:
             comment = Comment.objects.create(post=post, author=request.user, content=content)
-            post.comments_count = post.comments.count()  # Update the comment count
+            post.number_of_comments = post.comments.count()  # Update the comment count
             post.save()
             messages.success(request, 'Comment added successfully!')
     return redirect('full_post', slug=slug)
-@user_passes_test(lambda u: u.is_superuser)
 
-@login_required
-def delete_comment(request, slug, id):
-    post = get_object_or_404(Post, slug=slug)
-    comment = get_object_or_404(Comment, id=id)
-    comment.delete()
-    post.number_of_comments -= 1
-    post.save()
-    messages.success(request, 'Comment deleted successfully!')
-    return redirect('full_post', slug=slug)
+# The delete_comment view is no longer needed for user-facing functionality,
+# since admins can handle comment deletion through the admin panel.
+#def delete_comment(request, slug, id):
+ #post = get_object_or_404(Post, slug=slug)
+#comment = get_object_or_404(Comment, id=id)
+#comment.delete()
+#post.number_of_comments -= 1
+#post.save()
+#messages.success(request, 'Comment deleted successfully!')
+#return redirect('full_post', slug=slug)
 
 @csrf_exempt
 @login_required
@@ -301,18 +306,6 @@ def filter_posts_by_status(request, status):
     posts = Post.objects.filter(status=status)
     return render(request, 'posts/posts_by_status.html', {'posts': posts, 'status': status})
 
-def send_test_email_view(request):
-    try:
-        send_mail(
-            'Test Email Subject',
-            'This is a test email body.',
-            settings.DEFAULT_FROM_EMAIL,
-            ['test@example.com'],
-            fail_silently=False,
-        )
-        return HttpResponse("Test email sent successfully")
-    except Exception as e:
-        return HttpResponse(f"Failed to send email: {str(e)}")
 
 def create_post(request):
     if request.method == 'POST':
@@ -329,8 +322,5 @@ def create_post(request):
         form = PostForm()
     return render(request, 'posts/create_post.html', {'form': form})
 
-def about(request):
-    return render(request, 'about.html') 
 
-def contact(request):
-    return render(request, 'contact.html')
+

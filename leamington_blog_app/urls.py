@@ -3,8 +3,8 @@ from . import views
 from .views import (
     index, signup, login_view, logout_view, user_account, add_post, about, contact, 
     view_post, edit_post, delete_post, blog_list, full_post, add_comment, 
-    delete_comment, like_post, comment_post, save_draft, view_drafts, edit_draft, 
-    update_profile, approve_post, reject_post, filter_posts_by_status, send_test_email_view
+    like_post, comment_post, save_draft, view_drafts, edit_draft, 
+    update_profile, approve_post, reject_post, filter_posts_by_status
 )
 
 
@@ -23,7 +23,6 @@ urlpatterns = [
     path('user-account/', user_account, name='user_account'), 
     path('posts/add/', add_post, name='add_post'),
     path('post/<slug:slug>/comment/add/', add_comment, name='add_comment'),
-    path('comment/<slug:slug>/<int:id>/delete/', views.delete_comment, name='delete_comment'),
     path('posts/<slug:slug>/', view_post, name='view_post'),
     path('posts/<slug:slug>/edit/', edit_post, name='edit_post'),
     path('posts/<slug:slug>/delete/', delete_post, name='delete_post'),
@@ -33,7 +32,6 @@ urlpatterns = [
     path('admin/posts/<slug:slug>/approve/', approve_post, name='approve_post'),
     path('admin/posts/<slug:slug>/reject/', reject_post, name='reject_post'),
     path('posts/<str:status>/', filter_posts_by_status, name='filter_posts_by_status'),
-    path('send-test-email/', send_test_email_view, name='send_test_email'),
-     path('populate-slugs/', views.populate_slugs, name='populate_slugs'),
+    path('populate-slugs/', views.populate_slugs, name='populate_slugs'),
 
 ]

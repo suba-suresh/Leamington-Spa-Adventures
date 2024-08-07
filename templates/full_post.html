@@ -7,20 +7,21 @@
   <div class="row">
     <div class="col-md-8 offset-md-2">
       <div class="card">
-        <img class="card-img-top" src="{{ post.featured_image.url }}" alt="Featured image for {{ post.title }}">
+        <!-- Correct image field name -->
+        <img class="card-img-top" src="{{ post.image.url }}" alt="Featured image for {{ post.title }}">
         <div class="card-body">
           <h2 class="card-title">{{ post.title }}</h2>
           <p class="post-details text-muted">
             <i class="fa-regular fa-pen-to-square"></i> {{ post.author.username }} |
             <i class="fa-regular fa-calendar-check"></i> {{ post.created_at|date:"M d, Y H:i" }} |
-            <i class="far fa-heart"></i> {{ likes_count }} |
-            <i class="far fa-comments"></i> {{ comments_count }}
+            <i class="far fa-heart"></i> {{ post.number_of_likes }} |
+            <i class="far fa-comments"></i> {{ post.number_of_comments }}
           </p>
           <p>{{ post.description }}</p>
 
           <!-- Likes Section -->
           <div class="mt-3">
-            <p>Total likes: {{ likes_count }}</p>
+            <p>Total likes: {{ post.number_of_likes }}</p>
             {% if post.author != request.user %}
               {% if user_has_liked %}
                 <p>You liked this post.</p>
@@ -33,39 +34,34 @@
             {% endif %}
           </div>
 
-       <!-- Comment Section -->
-       <div class="mt-5">
-        <h4>Comments:</h4>
-        <div class="comments-section">
-          {% for comment in post.comments.all %}
-            <div class="comment mb-3">
-              <p><strong>{{ comment.author.username }}</strong> on {{ comment.created_at|date:"M d, Y H:i" }} wrote:</p>
-              <p>{{ comment.content }}</p>
-              {% if comment.author == request.user %}
-                <form method="post" action="{% url 'delete_comment' post.slug comment.id %}">
-                  {% csrf_token %}
-                </form>
-              {% endif %}
+          <!-- Comment Section -->
+          <div class="mt-5">
+            <h4>Comments:</h4>
+            <div class="comments-section">
+              {% for comment in post.comments.all %}
+                <div class="comment mb-3">
+                  <p><strong>{{ comment.author.username }}</strong> on {{ comment.created_at|date:"M d, Y H:i" }} wrote:</p>
+                  <p>{{ comment.content }}</p>
+                  <!-- No delete button -->
+                </div>
+                <hr>
+              {% empty %}
+                <p>No comments yet.</p>
+              {% endfor %}
             </div>
-            <hr>
-          {% empty %}
-            <p>No comments yet.</p>
-          {% endfor %}
-        </div>
-      </div>
-    </div>
+          </div>
 
-        <!-- Add Comment Form -->
-        {% if post.author != request.user %}
-          <form method="post" action="{% url 'add_comment' post.slug %}">
-            {% csrf_token %}
-            <div class="form-group">
-              <textarea class="form-control" name="content" rows="3" placeholder="Add a comment..."></textarea>
-            </div>
-            <button type="submit" class="btn btn-secondary mt-2">Comment</button>
-            <button type="submit" class="btn btn-danger">Delete</button>
-          </form>
-        {% endif %}
+          <!-- Add Comment Form -->
+          {% if post.author != request.user %}
+            <form method="post" action="{% url 'add_comment' post.slug %}">
+              {% csrf_token %}
+              <div class="form-group">
+                <textarea class="form-control" name="content" rows="3" placeholder="Add a comment..."></textarea>
+              </div>
+              <button type="submit" class="btn btn-secondary mt-2">Comment</button>
+            </form>
+          {% endif %}
+        </div>
       </div>
     </div>
   </div>

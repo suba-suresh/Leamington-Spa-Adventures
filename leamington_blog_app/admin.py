@@ -12,9 +12,11 @@ class PostAdmin(admin.ModelAdmin):
     list_filter = ('created_at', 'tags', 'status')
     prepopulated_fields = {'slug': ('title',)}
     actions = ['approve_posts', 'reject_posts']
+    
 
     # Fields that should be read-only
-    readonly_fields = ('author', 'title', 'description', 'image', 'slug', 'number_of_likes', 'number_of_comments', 'created_at', 'updated_at')
+    # readonly_fields = ('author', 'title', 'description', 'image', 'number_of_likes', 'number_of_comments', 'created_at', 'updated_at')
+    readonly_fields = ('author', 'description', 'image', 'number_of_likes', 'number_of_comments', 'created_at', 'updated_at')
 
     def get_readonly_fields(self, request, obj=None):
         """Dynamically adjust readonly fields based on whether the post is being edited."""
