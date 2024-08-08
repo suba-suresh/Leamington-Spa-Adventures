@@ -81,12 +81,19 @@ class Draft(models.Model):
 
 # Profile model definition
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     bio = models.TextField(blank=True)
-    profile_image = CloudinaryField('image', blank=True, null=True)
+    
+    #profile_image = CloudinaryField('image', blank=True, null=True)
 
     def __str__(self):
-         return f"{self.user.username} Profile" or " "
+        try:
+            result = self.user.username
+            print(f"__str__ method called. Returning: {result}")
+            return result
+        except Exception as e:
+            print(f"Error in __str__: {e}")
+            return "Unknown"
 
 # Ensure that a Profile is created or updated when a User is created or updated
 @receiver(post_save, sender=User)

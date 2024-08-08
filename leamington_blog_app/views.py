@@ -37,7 +37,6 @@ def blog_list(request):
     page_obj = paginator.get_page(page_number)
     status = request.GET.get('status', 'pending')  # Default to 'pending' if no status is provided
 
-    print(post_list)  # Print to console for debugging
     
     context = {
         'post_list': page_obj.object_list,
@@ -121,14 +120,11 @@ def user_account(request):
 @login_required
 def add_post(request):
     if request.method == 'POST':
-        form = PostForm(request.POST, request.FILES)
+        form = PostForm(request.POST, request.FILES, user=request.user)
         if form.is_valid():
             post = form.save(commit=False)
-            post.author = request.user
-            if not post.slug:
-                post.slug = slugify(post.title)
+            post.author = request.user  # Ensure the author field is set
             post.save()
-            notify_admin_post_created(post)
             messages.success(request, 'Post added successfully and is pending approval!')
             return redirect('user_account')
         else:
@@ -140,8 +136,6 @@ def add_post(request):
 @login_required
 def edit_post(request, slug):
     post = get_object_or_404(Post, slug=slug)
-    if request.user != post.author and not (request.user.is_staff and post.admin_editable):
-        return HttpResponseForbidden("You don't have permission to edit this post.")
     if request.method == 'POST':
         form = PostForm(request.POST, request.FILES, instance=post)
         if form.is_valid():
@@ -283,7 +277,7 @@ def update_profile(request):
 @user_passes_test(lambda u: u.is_superuser)
 def approve_post(request, slug):
     post = get_object_or_404(Post, slug=slug)
-    if post.status == 'pending':  # Assuming 'pending' is the status for unapproved posts
+    if post.status == 'pending':  #  'pending' is the status for unapproved posts
         post.status = 'approved'  # Change status to 'approved'
         post.save()
         messages.success(request, 'Post approved successfully!')
@@ -294,7 +288,7 @@ def approve_post(request, slug):
 @user_passes_test(lambda u: u.is_superuser)
 def reject_post(request, slug):
     post = get_object_or_404(Post, slug=slug)
-    if post.status == 'pending':  # Assuming 'pending' is the status for unapproved posts
+    if post.status == 'pending':  #  'pending' is the status for unapproved posts
         post.status = 'rejected'  # Change status to 'rejected'
         post.save()
         messages.success(request, 'Post rejected successfully!')
@@ -308,19 +302,15 @@ def filter_posts_by_status(request, status):
 
 
 def create_post(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
             post = form.save(commit=False)
-            post.author = request.user
-            post.status = 'pending'  # Default status for new posts
+            post.author = request.user  
             post.save()
-            notify_admin_post_created(post)
-            messages.success(request, 'Your post has been submitted for review.')
-            return redirect('post_list')
+            return redirect('post_detail', post_id=post.id)
     else:
         form = PostForm()
     return render(request, 'posts/create_post.html', {'form': form})
-
 
 

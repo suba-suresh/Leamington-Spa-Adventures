@@ -46,17 +46,12 @@ class PostForm(forms.ModelForm):
         user = kwargs.pop('user', None)
         super(PostForm, self).__init__(*args, **kwargs)     
         
-        # Debugging: Print the current fields
-        print(f"Fields before user check: {self.fields.keys()}")
 
         if user and not user.is_staff:
-            # Safely remove fields for non-staff users
+            # remove fields for non-staff users
             self.fields.pop('slug', None)
             self.fields.pop('status', None)
             
-        
-        # Debugging: Print the fields after conditional logic
-        print(f"Fields after user check: {self.fields.keys()}")
 
 class CommentForm(forms.ModelForm):
     class Meta:
@@ -71,4 +66,4 @@ class UserUpdateForm(forms.ModelForm):
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile 
-        fields = ['bio', 'profile_image']
+        fields = ['bio']
