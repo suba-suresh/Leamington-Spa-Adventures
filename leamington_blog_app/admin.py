@@ -12,11 +12,12 @@ class PostAdmin(admin.ModelAdmin):
     list_filter = ('created_at', 'tags', 'status')
     prepopulated_fields = {'slug': ('title',)}
     actions = ['approve_posts', 'reject_posts']
-    
 
-    # Fields that should be read-only
-    # readonly_fields = ('author', 'title', 'description', 'image', 'number_of_likes', 'number_of_comments', 'created_at', 'updated_at')
-    readonly_fields = ('author', 'description', 'image', 'number_of_likes', 'number_of_comments', 'created_at', 'updated_at')
+    def save_model(self, request, obj, form, change):
+        if not change:  # New object
+            obj.author = request.user
+        obj.save()
+    
 
     def get_readonly_fields(self, request, obj=None):
         """Dynamically adjust readonly fields based on whether the post is being edited."""
@@ -70,13 +71,11 @@ class LikeAdmin(admin.ModelAdmin):
 
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ('user', 'bio', 'profile_image')
+    list_display = ('user', 'bio')
     search_fields = ('user__username', 'bio')
-
-class CustomUserAdmin(BaseUserAdmin):
-    list_display = ('username', 'email', 'is_staff')  # Keeping these fields for User model
     readonly_fields = ('likes_count',)
 
     def likes_count(self, obj):
-        return Like.objects.filter(user=obj).count()
+        from .models import Like
+        return Like.objects.filter(user=obj.user).count()
     likes_count.short_description = 'Number of Likes'

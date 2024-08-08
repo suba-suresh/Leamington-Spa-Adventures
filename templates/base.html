@@ -145,11 +145,9 @@
 
         function timerIncrement() {
             idleTime++;
-            console.log("Idle time incremented to: " + idleTime); // Logging for debugging
             if (idleTime > warningTime && idleTime <= maxIdleTime) {
                 if (confirm("Your session is about to expire in " + (maxIdleTime - idleTime) + " minutes. Do you want to continue?")) {
                     idleTime = 0; // Reset the idle time if user clicks "OK"
-                    console.log("User chose to continue the session."); // Logging for debugging
                 } else {
                     window.location.href = "{% url 'accounts_signout' %}"; // Log out if user clicks "Cancel"
                 }
@@ -165,12 +163,10 @@
         // Zero the idle timer on mouse movement or keypress.
         $(this).mousemove(function (e) {
             idleTime = 0;
-            console.log("Mouse movement detected, idle time reset."); // Logging for debugging
         });
 
         $(this).keypress(function (e) {
             idleTime = 0;
-            console.log("Keypress detected, idle time reset."); // Logging for debugging
         });
 
         // Notification bar script

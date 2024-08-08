@@ -17,7 +17,8 @@
           {% endif %}
           <p><strong>Username:</strong> {{ user.username }}</p>
           <p><strong>Bio:</strong> {{ user.profile.bio }}</p>
-          <a href="{% url 'update_profile' %}" class="btn btn-primary btn-sm">Edit Profile</a>
+          <a href="{% url 'update_profile' %}" class="btn btn-primary btn-sm">Edit Profile</a><br>
+          <a href="{% url 'add_post' %}" class="btn btn-primary btn-sm">Add Post</a>
         </div>
       </div>
     </div>
