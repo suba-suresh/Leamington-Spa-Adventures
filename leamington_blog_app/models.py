@@ -6,7 +6,6 @@ from django.utils.text import slugify
 from django.dispatch import receiver 
 from django.db.models.signals import post_save
 import random
-from cloudinary.models import CloudinaryField
 
 class Post(models.Model):
     STATUS_CHOICES = (
@@ -16,7 +15,7 @@ class Post(models.Model):
     )
     title = models.CharField(max_length=255)
     description = models.TextField()
-    image = CloudinaryField('image')
+    image = CloudinaryField('image', blank=True, null=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -28,23 +27,27 @@ class Post(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.title)
+            self.slug = self.generate_unique_slug()
         super().save(*args, **kwargs)
 
     def generate_unique_slug(self):
-        base_slug = slugify(self.title)
-        slug = base_slug
-        while Post.objects.filter(slug=slug).exists():
-            slug = f"{base_slug}-{random.randint(1, 10000)}"
-        return slug
+        slug = slugify(self.title)
+        unique_slug = slug
+        num = 1
+        while Post.objects.filter(slug=unique_slug).exists():
+            unique_slug = f"{slug}-{num}"
+            num += 1
+        return unique_slug
 
     def get_likes_count(self):
         return self.like_set.count()
 
-    # def __str__(self):
-    #     return self.title 
+
     def __str__(self):
-        return self.title if self.title else "Untitled Post"
+        return self.title or "Untitled Post"
+
+    def get_image_url(self):
+        return self.image.url if self.image else 'path/to/default/image.jpg'
     
 
 class Comment(models.Model):
@@ -53,7 +56,6 @@ class Comment(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    image = CloudinaryField('image', null=True, blank=True)
 
     def __str__(self):
         return f'Comment by {self.author} on {self.post}'
@@ -71,34 +73,39 @@ class Like(models.Model):
 
 class Draft(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    title = models.CharField(max_length=200, blank=True, null=True)
-    content = models.TextField(blank=True, null=True)
+    title = models.CharField(max_length=200)
+    description = models.TextField(blank=True, null=False, default='No description provided')
+    image = CloudinaryField('image', blank=True, null=True)
+    tags = TaggableManager(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.title if self.title else 'Untitled Draft'
 
+    def get_image_url(self):
+        return self.image.url if self.image else 'path/to/default/image.jpg'
+
 # Profile model definition
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     bio = models.TextField(blank=True)
-    
-    #profile_image = CloudinaryField('image', blank=True, null=True)
+    profile_image = CloudinaryField('image', blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)  
 
     def __str__(self):
-        try:
-            result = self.user.username
-            print(f"__str__ method called. Returning: {result}")
-            return result
-        except Exception as e:
-            print(f"Error in __str__: {e}")
-            return "Unknown"
+        return self.user.username
+
+    def get_image_url(self):
+        if self.profile_image:
+            return self.profile_image.url
+        else:
+            return 'path/to/default/profile_image.jpg'
+
 
 # Ensure that a Profile is created or updated when a User is created or updated
 @receiver(post_save, sender=User)
 def create_or_update_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
-    else:
-        instance.profile.save()
+    instance.profile.save()

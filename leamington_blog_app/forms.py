@@ -2,7 +2,8 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError 
-from .models import Post, Comment, Profile
+from .models import Post, Comment, Profile, Draft
+
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -66,4 +67,19 @@ class UserUpdateForm(forms.ModelForm):
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile 
-        fields = ['bio']
+        fields = ['bio', 'profile_image']
+
+
+class DraftForm(forms.ModelForm):
+    class Meta:
+        model = Draft
+        fields = ['title', 'description', 'image', 'tags']
+        widgets = {
+            'tags': forms.TextInput(attrs={'placeholder': 'Add tags, separated by commas'}),
+        }
+
+    def clean_title(self):
+        title = self.cleaned_data.get('title')
+        if Post.objects.filter(title=title).exists():
+            raise forms.ValidationError("A post with this title already exists.")
+        return title

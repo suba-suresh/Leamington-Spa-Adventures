@@ -1,7 +1,17 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from django.utils.safestring import mark_safe 
 from .models import Post, Comment, Like, Profile
 from .forms import PostForm
+
+
+class CustomUserAdmin(BaseUserAdmin):
+    list_display = ('username', 'email', 'first_name', 'last_name', 'is_staff')
+    
+    def is_staff(self, obj):
+        return "✓" if obj.is_staff else "✗"
+    is_staff.short_description = 'Staff Status'
+    is_staff.admin_order_field = 'is_staff'
 
 
 @admin.register(Post)
@@ -14,7 +24,7 @@ class PostAdmin(admin.ModelAdmin):
     actions = ['approve_posts', 'reject_posts']
 
     def save_model(self, request, obj, form, change):
-        if not change:  # New object
+        if not change:
             obj.author = request.user
         obj.save()
     
@@ -71,11 +81,13 @@ class LikeAdmin(admin.ModelAdmin):
 
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ('user', 'bio')
+    list_display = ('user', 'bio', 'profile_image_display', 'created_at')
     search_fields = ('user__username', 'bio')
-    readonly_fields = ('likes_count',)
+    readonly_fields = ('created_at',)
 
-    def likes_count(self, obj):
-        from .models import Like
-        return Like.objects.filter(user=obj.user).count()
-    likes_count.short_description = 'Number of Likes'
+    def profile_image_display(self, obj):
+        if obj.profile_image and obj.profile_image.url != 'path/to/default/profile_image':
+            return mark_safe(f'<img src="{obj.profile_image.url}" width="100" height="100"/>')
+        return "No Image"
+
+    profile_image_display.short_description = 'Profile Image'

@@ -8,11 +8,19 @@
   <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
+    {% if form.instance.featured_image %}
+      <div class="form-group">
+        <label for="image">Current Image:</label>
+        <img src="{{ form.instance.featured_image.url }}" alt="Current Image" class="img-thumbnail" style="max-width: 200px;">
+      </div>
+    {% endif %}
     <button type="submit" class="btn btn-primary">Add Post</button>
+    <button type="submit" class="btn btn-primary" href="{% url 'drafts_list' %}">Add Draft</button>
   </form>
   <a href="{% url 'user_account' %}" class="btn btn-secondary mt-3">Back to My Account</a>
 </div>
 {% endblock %}
+
 
 <!-- add_post.html -->
 <script>
