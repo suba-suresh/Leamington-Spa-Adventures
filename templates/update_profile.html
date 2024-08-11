@@ -4,27 +4,62 @@
 {% block title %}Update Profile{% endblock %}
 
 {% block content %}
-<div class="container my-5">
-  <br>
-  <br>
-  <br>
-  <br>
-  <h2>Update Personal Details</h2>
-  <form action="{% url 'update_profile' %}" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    <div class="mb-3">
-      <label for="username" class="form-label"></label>
-      {{ user_form.username|as_crispy_field }}
+<div class="container-md container-contact bg-white rounded-3 box-shadow p-4 mt-5 mb-5" data-aos="fade-down">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <!-- Normal H2 heading -->
+      <h2 class="text-center mb-4" style="color: black;">
+        Update Personal Details
+      </h2>
+      
+      <form action="{% url 'update_profile' %}" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+        {% csrf_token %}
+
+        <!-- Username Field -->
+        <div class="mb-3" style="color: black;">
+          {{ user_form.username|as_crispy_field }}
+          
+          {% if user_form.username.errors %}
+            <div class="invalid-feedback d-block" style="color: black;">
+              {% for error in user_form.username.errors %}
+                {{ error }}
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+
+        <!-- Bio Field -->
+        <div class="mb-3">
+          
+          {{ profile_form.bio|as_crispy_field }}
+          {% if profile_form.bio.errors %}
+            <div class="invalid-feedback d-block" style="color: black;">
+              {% for error in profile_form.bio.errors %}
+                {{ error }}
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+
+        <!-- Profile Image Field -->
+        <div class="mb-3">
+          
+          {{ profile_form.profile_image|as_crispy_field }}
+          {% if profile_form.profile_image.errors %}
+            <div class="invalid-feedback d-block" style="color: black;">
+              {% for error in profile_form.profile_image.errors %}
+                {{ error }}
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+
+        <!-- Submit Button -->
+        <div class="text-center">
+          <button type="submit" class="btn btn-success">Update Profile</button>
+        </div>
+      </form>
     </div>
-    <div class="mb-3">
-      <label for="bio" class="form-label"></label>
-      {{ profile_form.bio|as_crispy_field }}
-    </div>
-    <div class="mb-3">
-      <label for="profile_image" class="form-label"> </label>
-      {{ profile_form.profile_image|as_crispy_field }}
-    </div>
-    <button type="submit" class="btn btn-success">Update Profile</button>
-  </form>
+  </div>
 </div>
 {% endblock %}

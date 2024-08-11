@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.forms import AuthenticationForm
-from .forms import CustomUserCreationForm, PostForm, CommentForm, UserUpdateForm, ProfileUpdateForm
+from .forms import CustomUserCreationForm, PostForm, CommentForm, UserUpdateForm, ProfileUpdateForm, DraftForm
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
-from .models import Post, Comment, Like, Draft
+from .models import Post, Comment, Like, Draft, Profile
 from django.core.paginator import Paginator
 from django.http import JsonResponse, HttpResponseForbidden
 from django.views.decorators.csrf import csrf_exempt
@@ -77,15 +77,25 @@ def signup(request):
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            messages.success(request, 'Signup successful!')
+            # Check if a profile already exists for this user
+            if not Profile.objects.filter(user=user).exists():
+                # Ensure that 'your_cloudinary_default_image_id' is replaced with your actual Cloudinary image ID
+                profile_image_id = 'your_cloudinary_default_image_id'  # Use the actual ID of the default image
+                Profile.objects.create(user=user, profile_image=profile_image_id)
+            
+            # Authenticate and log in the user
             user = authenticate(username=user.username, password=form.cleaned_data['password1'])
             if user is not None:
                 auth_login(request, user)
-            return redirect('index')
+                messages.success(request, 'Signup successful!')
+                return redirect('index')
+            else:
+                messages.error(request, 'Authentication failed. Please try again.')
         else:
-            messages.error(request, 'Signup failed. Please try again.')
+            messages.error(request, 'Signup failed. Please correct the errors below.')
     else:
         form = CustomUserCreationForm()
+    
     return render(request, 'accounts/signup.html', {'form': form})
 
 def login_view(request):
@@ -164,6 +174,14 @@ def view_post(request, slug):
     return render(request, 'posts/view_post.html', {'post': post, 'user_posts': user_posts})
 
 @login_required
+def user_posts(request):
+    print("User Posts View Called")  # Check console/log output
+    user_posts = Post.objects.filter(author=request.user)
+    return render(request, 'posts/user_posts.html', {'posts': user_posts})
+
+
+    
+@login_required
 def like_post(request, slug):
     post = get_object_or_404(Post, slug=slug)
     if post.author != request.user:
@@ -224,34 +242,45 @@ def add_comment(request, slug):
 
 @csrf_exempt
 @login_required
-def save_draft(request):
-    if request.method == 'POST':
-        data = json.loads(request.body)
-        title = data.get('title', '')
-        content = data.get('content', '')
-        draft, created = Draft.objects.get_or_create(author=request.user, title=title)
-        draft.content = content
-        draft.save()
-        return JsonResponse({'status': 'success'})
-    return JsonResponse({'status': 'error'}, status=400)
+def draft_list(request):
+    drafts = Draft.objects.filter(author=request.user)
+    return render(request, 'drafts/drafts_list.html', {'drafts': drafts})
 
 @login_required
-def view_drafts(request):
-    drafts = Draft.objects.filter(author=request.user)
-    return render(request, 'drafts/drafts.html', {'drafts': drafts})
-
+def view_draft(request, id):
+    draft = get_object_or_404(Draft, id=id, author=request.user)
+    return render(request, 'drafts/view_draft.html', {'draft': draft})
 
 @login_required
 def edit_draft(request, id):
-    draft = get_object_or_404(Draft, id=id)
+    draft = get_object_or_404(Draft, id=id, author=request.user)
     if request.method == 'POST':
-        content = request.POST.get('content', '')
-        if content:
-            draft.content = content
+        form = DraftForm(request.POST, instance=draft)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Draft saved successfully!')
+            return redirect('drafts_list')
+        else:
+            messages.error(request, 'Error saving draft. Please correct the errors below.')
+    else:
+        form = DraftForm(instance=draft)
+    return render(request, 'drafts/edit_drafts.html', {'form': form})
+
+@login_required
+def create_draft(request):
+    if request.method == 'POST':
+        form = DraftForm(request.POST, request.FILES)  # Include request.FILES for image uploads
+        if form.is_valid():
+            draft = form.save(commit=False)
+            draft.author = request.user
             draft.save()
-            messages.success(request, 'Draft updated successfully!')
-            return redirect('draft_list')
-    return render(request, 'drafts/edit_draft.html', {'draft': draft})
+            messages.success(request, 'Draft created successfully!')
+            return redirect('drafts_list')
+        else:
+            messages.error(request, 'Draft post are failed to upload.')
+    else:
+        form = DraftForm()
+    return render(request, 'drafts/edit_drafts.html', {'form': form})
 
 
 @login_required

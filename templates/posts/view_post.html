@@ -15,7 +15,7 @@
     </div>
 
     <!-- Display other posts by the same author -->
-    <h2 class="mb-4">Other Posts by {{ post.author.username }}</h2>
+    <h2 class="mb-4" style="color: white;">Other Posts by {{ post.author.username }}</h2>
     <div class="row">
         {% for user_post in user_posts %}
             <div class="col-md-4 mb-4">
@@ -24,7 +24,7 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ user_post.title }}</h5>
                         <p class="card-text">{{ user_post.description|slice:":100" }}...</p>
-                        <a href="{% url 'view_post' user_post.slug %}" class="btn btn-body-1">Read More</a>
+                        <a href="{% url 'view_post' user_post.slug %}" class="btn btn-body-1">Read More</a> <br>
                         <a href="{% url 'user_account' %}" class="btn btn-secondary mb-3">Back to Dashboard</a>
                     </div>
                 </div>
