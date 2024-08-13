@@ -33,8 +33,8 @@ main {
 
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Gloock', serif;
+    
 }
-
 
 a, a:hover {
     text-decoration: none;
@@ -92,6 +92,18 @@ a, a:hover {
     font-size: medium;
     margin: 0;
 }
+
+.signup-heading {
+    font-family: 'Lobster', cursive;  /* Use a decorative font */
+    font-size: 24px;                  /* Larger font size */
+    text-align: center;               /* Center the text */
+    margin-bottom: 20px;              /* Add space below the heading */
+    background: linear-gradient(90deg, #f3a25c, #dd8b61); /* Soft background gradient */
+    padding: 10px 20px;               /* Add padding for better spacing */
+    border-radius: 8px;               /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Subtle shadow for depth */
+}
+
 
 /* General Button Styles */
 button {
@@ -247,7 +259,7 @@ button {
 }
 
 .col-md-4 {
-    display: column;
+    display: flex;
     flex-direction: row;
 }
 
@@ -281,8 +293,86 @@ button {
 /* Adjust the index margins for spacing */
 .mb-4, p  {
     margin-bottom: 1.5rem;
-    color: #FFF;
+    color: white;
 }
+
+.mb-0, p{
+    margin-bottom: 0rem !important;
+    color: black;
+}
+
+
+.form-group-spacing {
+    margin-bottom: 1rem; /* Adjust this value as needed */
+  }
+  
+  .form-group-spacing p {
+    margin-bottom: 1rem; /* Ensure spacing between fields */
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column; /* Align items vertically */
+  }
+  
+  .form-group label {
+    margin-bottom: 0.5rem; /* Space between label and input */
+  }
+  
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    width: 100%; /* Ensure input fields take full width */
+  
+}
+
+/* Container adjustments for responsive design (login)*/
+.container-accounts {
+    max-width: 100%; /* Full width on smaller screens */
+    margin: auto; /* Center horizontally */
+    padding: 1rem; /* Add padding */
+  }
+  
+  @media (min-width: 576px) {
+    .container-accounts {
+      max-width: 540px; /* Adjust max-width for small screens */
+    }
+  }
+  
+  @media (min-width: 768px) {
+    .container-accounts {
+      max-width: 720px; /* Adjust max-width for medium screens */
+    }
+  }
+  
+  @media (min-width: 992px) {
+    .container-accounts {
+      max-width: 960px; /* Adjust max-width for large screens */
+    }
+  }
+  
+  @media (min-width: 1200px) {
+    .container-accounts {
+      max-width: 1140px; /* Adjust max-width for extra-large screens */
+    }
+  }
+  
+  /* Full-width buttons */
+  .btn-w-100 {
+    width: 100%;
+  }
+  
+  /* Ensure form-group elements take full width on smaller screens */
+  .form-group {
+    width: 100%;
+  }
+  
+  /* Additional styling for form elements(login) */
+  .form-control {
+    width: 100%; /* Ensure inputs take full width */
+    box-sizing: border-box; /* Include padding and border in element's total width and height */
+  }
+
 
 /* Responsive adjustments(user_account) */
 @media (max-width: 768px) {
@@ -296,14 +386,22 @@ button {
 
 /* Profile Styles */
 .profile-image-wrapper {
-    width: 80px;
-    height: 80px;
+    width: 150px;
+    height: 150px;
+    margin: 0 auto; /* Centers the wrapper itself horizontally */
+    display: flex;
+    justify-content: center; /* Centers the image horizontally */
+    align-items: center; /* Centers the image vertically */
 }
 
 .profile-image-wrapper img {
-    width: 100%;
+    max-width: 100%;
+    max-height: 100%;
     height: auto;
+    width: auto;
+    border-radius: 50%;
 }
+
 
 .profile-info {
     flex: 1;
@@ -383,11 +481,8 @@ textarea {
     color: #721c24;
 }
 
-/* Info alerts */
-.alert-info {
-    background-color: #d1ecf1;
-    color: #0c5460;
-}
+
+
 
 /* Warning alerts */
 .alert-warning {

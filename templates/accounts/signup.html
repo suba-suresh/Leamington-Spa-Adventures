@@ -10,38 +10,52 @@
   <div class="container-md container-accounts bg-white rounded-3 box-shadow pt-0 px-0">
     <div class="header-accounts rounded-top m-0"></div>
     <div class="accounts-body p-4 mx-3">
+      <div class="signup-heading mb-4">Sign up to capture your adventures, share your stories, and inspire a community eager to be inspired.</div>
       <h3 class="card-title mb-3">{% trans "Register New Account:" %}</h3>
       <form method="post" novalidate>
         {% csrf_token %}
-        <div class="form-group">
-            <label for="{{ form.username.id_for_label }}">Username</label>
-            <input type="text" name="username" id="{{ form.username.id_for_label }}" autocomplete="off" value="{{ form.username.value|default_if_none:'' }}">
-            {{ form.username.errors }}
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <div class="form-group">
+                <label for="{{ form.username.id_for_label }}">Username</label>
+                <input type="text" class="form-control" name="username" id="{{ form.username.id_for_label }}" autocomplete="off" value="{{ form.username.value|default_if_none:'' }}">
+                <div class="text-danger">{{ form.username.errors }}</div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+                <label for="{{ form.email.id_for_label }}">Email</label>
+                <input type="email" class="form-control" name="email" id="{{ form.email.id_for_label }}" autocomplete="off" value="{{ form.email.value|default_if_none:'' }}">
+                <div class="text-danger">{{ form.email.errors }}</div>
+            </div>
+          </div>
         </div>
-        <br>
-        <div class="form-group">
-            <label for="{{ form.email.id_for_label }}">Email</label>
-            <input type="email" name="email" id="{{ form.email.id_for_label }}" autocomplete="off" value="{{ form.email.value|default_if_none:'' }}">
-            {{ form.email.errors }}
+
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <div class="form-group">
+                <label for="{{ form.password1.id_for_label }}">Password</label>
+                <input type="password" class="form-control" name="password1" id="{{ form.password1.id_for_label }}" autocomplete="off" value="{{ form.password1.value|default_if_none:'' }}">
+                <div class="text-danger">{{ form.password1.errors }}</div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+                <label for="{{ form.password2.id_for_label }}">Password Confirmation</label>
+                <input type="password" class="form-control" name="password2" id="{{ form.password2.id_for_label }}" autocomplete="off" value="{{ form.password2.value|default_if_none:'' }}">
+                <div class="text-danger">{{ form.password2.errors }}</div>
+            </div>
+          </div>
         </div>
-        <br>
-        <div class="form-group">
-            <label for="{{ form.password1.id_for_label }}">Password</label>
-            <input type="password" name="password1" id="{{ form.password1.id_for_label }}" autocomplete="off" value="{{ form.password1.value|default_if_none:'' }}">
-            {{ form.password1.errors }}
+
+        <div class="text-center">
+          <button type="submit" class="btn btn-outline-green me-1">Sign Up</button>
         </div>
-        <br>
-        <div class="form-group">
-            <label for="{{ form.password2.id_for_label }}">Password Confirmation</label>
-            <input type="password" name="password2" id="{{ form.password2.id_for_label }}" autocomplete="off" value="{{ form.password2.value|default_if_none:'' }}">
-            {{ form.password2.errors }}
-        </div>
-        <br>
-        <button type="submit" class="btn btn-outline-green me-1">Sign Up</button>
-    </form>
-    
-    <br>
-      <a class="text-link" href="{% url 'accounts_login' %}">{% trans "Already have an account?" %}</a>
+      </form>
+
+      <div class="text-center mt-3">
+        <a class="text-link" href="{% url 'accounts_login' %}">{% trans "Already have an account?" %}</a>
+      </div>
     </div>
   </div>
 </div>

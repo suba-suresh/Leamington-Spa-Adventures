@@ -3,7 +3,7 @@
 
 {% block content %}
 <div class="container my-5">
-    <h2>My Posts</h2>
+    <h2 style="color: white;">My Posts</h2>
     <div class="row">
         {% for post in posts %}
             <div class="col-md-4 mb-4">
@@ -17,7 +17,7 @@
                 </div>
             </div>
         {% empty %}
-            <p>No posts available.</p>
+            <p style="color: white;">No posts available.</p>
         {% endfor %}
     </div>
 </div>

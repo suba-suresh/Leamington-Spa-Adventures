@@ -17,12 +17,37 @@
         <a class="text-link" href="{% url 'accounts_signup' %}">{% trans "sign up" %}</a>
         {% trans "first." %}
       </p>
-      <form method="post" class="form-group">
+      <form method="post" novalidate>
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-green">Login</button>
-    </form>
+        <div class="row mb-3">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="{{ form.username.id_for_label }}">Username</label>
+              <input type="text" class="form-control" name="username" id="{{ form.username.id_for_label }}" autocomplete="off" value="{{ form.username.value|default_if_none:'' }}">
+              <div class="text-danger">{{ form.username.errors }}</div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="{{ form.password.id_for_label }}">Password</label>
+              <input type="password" class="form-control" name="password" id="{{ form.password.id_for_label }}" autocomplete="off" value="{{ form.password.value|default_if_none:'' }}">
+              <div class="text-danger">{{ form.password.errors }}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center">
+          <button type="submit" class="btn btn-outline-green w-100 mt-3">Login</button>
+        </div>
+      </form>
+
+      <div class="text-center mt-3">
+        <a class="text-link" href="{% url 'accounts_signup' %}">{% trans "Don't have an account?" %}</a>
+      </div>
     </div>        
   </div>
 </div>
+{% endblock %}
+{% block extrascripts %}
+
 {% endblock %}

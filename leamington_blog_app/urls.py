@@ -3,8 +3,7 @@ from . import views
 from .views import (
     index, signup, login_view, logout_view, user_account, add_post, about, contact, user_posts,
     view_post, edit_post, delete_post, blog_list, full_post, add_comment, 
-    like_post, comment_post, create_draft, edit_draft, draft_list,
-    update_profile, approve_post, reject_post, filter_posts_by_status
+    like_post, comment_post, update_profile, approve_post, reject_post, filter_posts_by_status
 )
 
 
@@ -26,10 +25,6 @@ urlpatterns = [
     path('posts/<slug:slug>/', view_post, name='view_post'),
     path('posts/<slug:slug>/edit/', edit_post, name='edit_post'),
     path('posts/<slug:slug>/delete/', delete_post, name='delete_post'),
-    path('drafts/', views.draft_list, name='drafts_list'),
-    path('drafts/<int:id>/', views.view_draft, name='view_draft'),
-    path('drafts/<int:id>/edit/', views.edit_draft, name='edit_draft'),
-    path('drafts/create/', views.create_draft, name='create_draft'),
     path('update-profile/', update_profile, name='update_profile'),
     path('admin/posts/<slug:slug>/approve/', approve_post, name='approve_post'),
     path('admin/posts/<slug:slug>/reject/', reject_post, name='reject_post'),

@@ -1,5 +1,6 @@
 <!-- view_post.html -->
 {% extends "base.html" %}
+
 {% block content %}
 <div class="container my-5">
     <!-- Display the current post -->
@@ -10,8 +11,33 @@
         <img src="{{ post.image.url }}" class="card-img-top" alt="{{ post.title }}">
         <div class="card-body">
             <p>{{ post.description }}</p>
+
+            <!-- Likes and Comments Section -->
+            <p><i class="far fa-heart"></i> {{ post.number_of_likes }} Likes</p>
+            <p><i class="far fa-comments"></i> {{ post.number_of_comments }} Comments</p>
+            
+
             <a href="{% url 'user_account' %}" class="btn btn-secondary mb-3">Back to Dashboard</a>
         </div>
+    </div>
+     <br>
+     
+    <!-- Display comments -->
+    <div class="mt-5">
+        <h4 style="color:white;">Comments:</h4>
+     <div class="comments-section">
+           {% for comment in comments %} 
+            <div class="comment mb-3">
+              <p style="color:black;"><strong>{{ comment.author.username }}</strong> on {{ comment.created_at|date:"M d, Y H:i" }} wrote:</p>
+              <p style="color:black;">{{ comment.content }}</p>
+              <!-- No delete button -->
+            
+               <hr>
+           {% empty %}
+            <p style="color:white;">No comments yet.</p>
+           {% endfor %}
+           </div>
+     </div>
     </div>
 
     <!-- Display other posts by the same author -->
@@ -24,13 +50,12 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ user_post.title }}</h5>
                         <p class="card-text">{{ user_post.description|slice:":100" }}...</p>
-                        <a href="{% url 'view_post' user_post.slug %}" class="btn btn-body-1">Read More</a> <br>
-                        <a href="{% url 'user_account' %}" class="btn btn-secondary mb-3">Back to Dashboard</a>
+                        <a href="{% url 'view_post' user_post.slug %}" class="btn btn-body-1">Read More</a>
                     </div>
                 </div>
             </div>
         {% empty %}
-            <p>No other posts by this author.</p>
+            <p style="color: white;">No other posts by this author.</p>
         {% endfor %}
     </div>
 </div>
