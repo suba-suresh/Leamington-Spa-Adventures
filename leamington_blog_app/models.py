@@ -39,16 +39,19 @@ class Post(models.Model):
             num += 1
         return unique_slug
 
-    def get_likes_count(self):
-        return self.like_set.count()
+    def update_likes_count(self):
+        self.number_of_likes = Like.objects.filter(post=self).count()
+        self.save()
 
+    def update_comments_count(self):
+        self.number_of_comments = Comment.objects.filter(post=self).count()
+        self.save()
 
     def __str__(self):
         return self.title or "Untitled Post"
 
     def get_image_url(self):
         return self.image.url if self.image else 'path/to/default/image.jpg'
-    
 
 class Comment(models.Model):
     post = models.ForeignKey(Post, related_name='comments', on_delete=models.CASCADE)
@@ -56,6 +59,16 @@ class Comment(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        self.post.update_comments_count()  # Update count after saving a comment
+
+    def delete(self, *args, **kwargs):
+        post = self.post
+        super().delete(*args, **kwargs)
+        post.update_comments_count()  # Update count after deleting a comment
+
 
     def __str__(self):
         return f'Comment by {self.author} on {self.post}'
@@ -68,23 +81,18 @@ class Like(models.Model):
     class Meta:
         unique_together = ('user', 'post')
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        self.post.update_likes_count()  # Update count after saving a like
+
+    def delete(self, *args, **kwargs):
+        post = self.post
+        super().delete(*args, **kwargs)
+        post.update_likes_count()  # Update count after deleting a like
+
     def __str__(self):
         return f'{self.user} likes {self.post}'
 
-class Draft(models.Model):
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
-    title = models.CharField(max_length=200)
-    description = models.TextField(blank=True, null=False, default='No description provided')
-    image = CloudinaryField('image', blank=True, null=True)
-    tags = TaggableManager(blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return self.title if self.title else 'Untitled Draft'
-
-    def get_image_url(self):
-        return self.image.url if self.image else 'path/to/default/image.jpg'
 
 # Profile model definition
 class Profile(models.Model):

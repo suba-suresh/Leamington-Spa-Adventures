@@ -51,7 +51,7 @@ class PostAdmin(admin.ModelAdmin):
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
     list_display = ('author', 'post', 'content', 'created_at')
-    readonly_fields = ('created_at', 'updated_at', 'author', 'post')  # Keep these fields read-only
+    #readonly_fields = ('created_at', 'updated_at', 'author')  # Keep these fields read-only
 
     def save_model(self, request, obj, form, change):
         if not obj.author_id:  # If author is not set, use the current logged-in user
@@ -67,7 +67,7 @@ class CommentAdmin(admin.ModelAdmin):
 class LikeAdmin(admin.ModelAdmin):
     list_display = ('user', 'post', 'created_at')
     list_filter = ('created_at',)
-    readonly_fields = ('created_at', 'user')
+    #readonly_fields = ('created_at', 'user')
 
     def save_model(self, request, obj, form, change):
         if not obj.user_id:
@@ -83,7 +83,7 @@ class LikeAdmin(admin.ModelAdmin):
 class ProfileAdmin(admin.ModelAdmin):
     list_display = ('user', 'bio', 'profile_image_display', 'created_at')
     search_fields = ('user__username', 'bio')
-    readonly_fields = ('created_at',)
+    #readonly_fields = ('created_at',)
 
     def profile_image_display(self, obj):
         if obj.profile_image and obj.profile_image.url != 'path/to/default/profile_image':

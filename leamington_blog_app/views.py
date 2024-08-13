@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.forms import AuthenticationForm
-from .forms import CustomUserCreationForm, PostForm, CommentForm, UserUpdateForm, ProfileUpdateForm, DraftForm
+from .forms import CustomUserCreationForm, PostForm, CommentForm, UserUpdateForm, ProfileUpdateForm
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
-from .models import Post, Comment, Like, Draft, Profile
+from .models import Post, Comment, Like, Profile
 from django.core.paginator import Paginator
 from django.http import JsonResponse, HttpResponseForbidden
 from django.views.decorators.csrf import csrf_exempt
@@ -66,7 +66,7 @@ def full_post(request, slug):
 
     context = {
         'post': post,
-        'likes_count': likes_count,
+        'likes_count': post.number_of_likes,  # Use the field directly
         'comments': comments,
         'user_has_liked': user_has_liked,
     }
@@ -125,7 +125,18 @@ def logout_view(request):
 @login_required
 def user_account(request):
     user_posts = Post.objects.filter(author=request.user)
-    return render(request, 'user_account.html', {'user_posts': user_posts})
+    total_posts = user_posts.count()
+    approved_posts_count = user_posts.filter(status='approved').count()
+    rejected_posts_count = user_posts.filter(status='rejected').count()
+
+    context = {
+        'user_posts': user_posts,
+        'total_posts': total_posts,
+        'approved_posts_count': approved_posts_count,
+        'rejected_posts_count': rejected_posts_count,
+    }
+    return render(request, 'user_account.html', context)
+
 
 @login_required
 def add_post(request):
@@ -171,7 +182,15 @@ def delete_post(request, slug):
 def view_post(request, slug):
     post = get_object_or_404(Post, slug=slug)
     user_posts = Post.objects.filter(author=post.author).exclude(id=post.id)
-    return render(request, 'posts/view_post.html', {'post': post, 'user_posts': user_posts})
+    comments = Comment.objects.filter(post=post)
+    print(comments)  # Debug line
+    return render(request, 'posts/view_post.html', {
+        'post': post,
+        'user_posts': user_posts,
+        'comments': comments
+    })
+
+
 
 @login_required
 def user_posts(request):
@@ -191,11 +210,11 @@ def like_post(request, slug):
         else:
             like.delete()
             messages.success(request, 'You unliked the post.')
-        post.number_of_likes = Like.objects.filter(post=post).count()
-        post.save()
+        post.update_likes_count()  # Ensure this is called after the like is added or removed
     else:
         messages.error(request, 'You cannot like your own post.')
     return redirect('full_post', slug=slug)
+
 
 @login_required
 def comment_post(request, slug):
@@ -207,8 +226,7 @@ def comment_post(request, slug):
             comment.post = post
             comment.author = request.user
             comment.save()
-            post.number_of_comments += 1
-            post.save()
+            post.update_comments_count()  # Update the comment count after adding a comment
             messages.success(request, 'Comment added successfully!')
             return redirect('full_post', slug=slug)
         else:
@@ -218,69 +236,39 @@ def comment_post(request, slug):
     return render(request, 'full_post.html', {'post': post, 'form': form})
 
 @login_required
+def delete_comment(request, slug, comment_id):
+    post = get_object_or_404(Post, slug=slug)
+    comment = get_object_or_404(Comment, id=comment_id)
+    if comment.author == request.user or request.user.is_staff:
+        comment.delete()
+        post.update_comments_count()  # Ensure this is called after the comment is deleted
+        messages.success(request, 'Comment deleted successfully!')
+    else:
+        messages.error(request, 'You do not have permission to delete this comment.')
+    return redirect('full_post', slug=slug)
+
+@login_required
 def add_comment(request, slug):
     post = get_object_or_404(Post, slug=slug)
     if request.method == 'POST':
         content = request.POST.get('content')
         if content:
             comment = Comment.objects.create(post=post, author=request.user, content=content)
-            post.number_of_comments = post.comments.count()  # Update the comment count
+            post.update_comments_count()  # Update the comment count
             post.save()
             messages.success(request, 'Comment added successfully!')
     return redirect('full_post', slug=slug)
 
-# The delete_comment view is no longer needed for user-facing functionality,
-# since admins can handle comment deletion through the admin panel.
-#def delete_comment(request, slug, id):
- #post = get_object_or_404(Post, slug=slug)
-#comment = get_object_or_404(Comment, id=id)
-#comment.delete()
-#post.number_of_comments -= 1
-#post.save()
-#messages.success(request, 'Comment deleted successfully!')
-#return redirect('full_post', slug=slug)
-
-@csrf_exempt
 @login_required
-def draft_list(request):
-    drafts = Draft.objects.filter(author=request.user)
-    return render(request, 'drafts/drafts_list.html', {'drafts': drafts})
+@user_passes_test(lambda u: u.is_superuser)
+def delete_comment(request, slug, comment_id):
+    post = get_object_or_404(Post, slug=slug)
+    comment = get_object_or_404(Comment, id=comment_id)
+    comment.delete()
+    post.update_comments_count()  # Update the comment count
+    messages.success(request, 'Comment deleted successfully!')
+    return redirect('view_post', slug=slug)
 
-@login_required
-def view_draft(request, id):
-    draft = get_object_or_404(Draft, id=id, author=request.user)
-    return render(request, 'drafts/view_draft.html', {'draft': draft})
-
-@login_required
-def edit_draft(request, id):
-    draft = get_object_or_404(Draft, id=id, author=request.user)
-    if request.method == 'POST':
-        form = DraftForm(request.POST, instance=draft)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Draft saved successfully!')
-            return redirect('drafts_list')
-        else:
-            messages.error(request, 'Error saving draft. Please correct the errors below.')
-    else:
-        form = DraftForm(instance=draft)
-    return render(request, 'drafts/edit_drafts.html', {'form': form})
-
-@login_required
-def create_draft(request):
-    if request.method == 'POST':
-        form = DraftForm(request.POST, request.FILES)  # Include request.FILES for image uploads
-        if form.is_valid():
-            draft = form.save(commit=False)
-            draft.author = request.user
-            draft.save()
-            messages.success(request, 'Draft created successfully!')
-            return redirect('drafts_list')
-        else:
-            messages.error(request, 'Draft post are failed to upload.')
-    else:
-        form = DraftForm()
-    return render(request, 'drafts/edit_drafts.html', {'form': form})
 
 
 @login_required

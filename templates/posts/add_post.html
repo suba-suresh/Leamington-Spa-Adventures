@@ -3,53 +3,48 @@
 {% block title %}Add New Post{% endblock %}
 
 {% block content %}
-<div class="container my-5">
-  <h1 class="mb-4">Add New Post</h1>
-  <form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    {% if form.instance.featured_image %}
-      <div class="form-group">
-        <label for="image">Current Image:</label>
-        <img src="{{ form.instance.featured_image.url }}" alt="Current Image" class="img-thumbnail" style="max-width: 200px;">
+<div class="container-md container-contact bg-white rounded-3 box-shadow p-4 mt-5 mb-5" data-aos="fade-down">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <!-- Heading -->
+      <h2 class="text-center mb-4" style="color: black;">
+        Add New Post
+      </h2>
+      
+      <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+        {% csrf_token %}
+        
+        <!-- Apply the custom class for spacing and alignment -->
+        <div class="form-group-spacing">
+          {% for field in form %}
+            <div class="form-group">
+              {{ field.label_tag }}
+              {{ field }}
+              {% if field.errors %}
+                <div class="invalid-feedback d-block">
+                  {% for error in field.errors %}
+                    {{ error }}
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+        
+        {% if form.instance.featured_image %}
+          <div class="form-group mt-3">
+            <label for="image">Current Image:</label>
+            <img src="{{ form.instance.featured_image.url }}" alt="Current Image" class="img-thumbnail" style="max-width: 200px;">
+          </div>
+        {% endif %}
+        
+       <!-- Button Container with Flexbox -->
+       <div class="d-flex justify-content-between mt-3">
+        <button type="submit" class="btn btn-primary">Add Post</button>
+        <a href="{% url 'user_account' %}" class="btn btn-secondary">Back to My Account</a>
       </div>
-    {% endif %}
-    <button type="submit" class="btn btn-primary">Add Post</button>
-    <button type="submit" class="btn btn-primary" href="{% url 'drafts_list' %}">Add Draft</button>
-  </form>
-  <a href="{% url 'user_account' %}" class="btn btn-secondary mt-3">Back to My Account</a>
+    </form>
+  </div>
+ </div>
 </div>
 {% endblock %}
-
-
-<!-- add_post.html -->
-<script>
-  let saveDraftTimeout;
-  const saveDraftInterval = 10000; // Save draft every 10 seconds
-
-  function saveDraft() {
-      const content = document.querySelector('#post_content').value;
-      fetch("{% url 'save_draft' %}", {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json',
-              'X-CSRFToken': '{{ csrf_token }}'
-          },
-          body: JSON.stringify({ content: content })
-      })
-      .then(response => response.json())
-      .then(data => {
-          if (data.status === 'success') {
-              console.log('Draft saved successfully.');
-          } else {
-              console.log('Failed to save draft.');
-          }
-      });
-  }
-
-  document.querySelector('#post_content').addEventListener('input', () => {
-      clearTimeout(saveDraftTimeout);
-      saveDraftTimeout = setTimeout(saveDraft, saveDraftInterval);
-  });
-</script>
-

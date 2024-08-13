@@ -1,5 +1,4 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,11 +9,9 @@
   {% block meta %}{% endblock %}
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-touch-icon.png' %}">
   <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/favicon-32x32.png' %}">
   <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/favicon-16x16.png' %}">
-  <link rel="manifest" href="https://res.cloudinary.com/ddvsgi5xw/raw/upload/v1679568312/sitemanifest.webmanifest">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
     integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
     crossorigin="anonymous" referrerpolicy="no-referrer">
@@ -47,15 +44,14 @@
                   {% if user.is_superuser %}
                       <!-- Superuser (Admin) Links -->
                       <a href="{% url 'admin:index' %}" class="btn btn-green me-1">Admin Panel</a>
+                      <a href="{% url 'user_account' %}" class="btn btn-outline-green me-1">Dashboard</a>
                       <a href="{% url 'accounts_signout' %}" class="btn btn-outline-danger me-1">Sign Out</a>
                   {% else %}
                       <!-- Regular User Links -->
                       <div class="user-name button-group">
                           <i class="fa-regular fa-user"></i> <span class="d-inline me-1">{{ user.username }}</span>
-                          
-                            <a href="{% url 'user_account' %}" class="btn btn-outline-green me-1">Dashboard</a>
-                            <a href="{% url 'accounts_signout' %}" class="btn btn-outline-danger">Sign Out</a>
-                        
+                          <a href="{% url 'user_account' %}" class="btn btn-outline-green me-1">Dashboard</a>
+                          <a href="{% url 'accounts_signout' %}" class="btn btn-outline-danger">Sign Out</a>
                       </div>
                   {% endif %}
               {% else %}
@@ -82,57 +78,50 @@
         {% block content %}{% endblock %}
     </main>
 
-    
     <!-- Footer -->
-<footer class="footer bg-white py-3">
-    <div class="container">
-        <div class="row justify-content-between align-items-center">
-            <div class="col-md-4 text-center text-md-start mb-2 mb-md-0">
-                <p class="mb-0">&copy; <span id="currentYear"></span> Leamington Spa Adventures</p>
-            </div>
-            <div class="col-md-4 text-center mb-2 mb-md-0">
-                <nav class="footer-nav">
+    <footer class="footer bg-white py-3">
+        <div class="container">
+            <div class="row justify-content-between align-items-center">
+                <div class="col-md-4 text-center text-md-start mb-2 mb-md-0">
+                    <p class="mb-0">&copy; <span id="currentYear"></span> Leamington Spa Adventures</p>
+                </div>
+                <div class="col-md-4 text-center mb-2 mb-md-0">
+                    <nav class="footer-nav">
+                        <ul class="list-inline mb-0">
+                            <li class="list-inline-item"><a class="nav-link footer-link" href="{% url 'index' %}">Home</a></li>
+                            <li class="list-inline-item"><a class="nav-link footer-link" href="{% url 'blogs' %}">Blogs</a></li>
+                            <li class="list-inline-item"><a class="nav-link footer-link" href="{% url 'about' %}">Who We Are</a></li>
+                            <li class="list-inline-item"><a class="nav-link footer-link" href="{% url 'contact' %}">Contact Us</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-md-4 text-center text-md-end">
                     <ul class="list-inline mb-0">
-                        <li class="list-inline-item"><a class="nav-link footer-link" href="{% url 'index' %}">Home</a></li>
-                        <li class="list-inline-item"><a class="nav-link footer-link" href="{% url 'blogs' %}">Blogs</a></li>
-                        <li class="list-inline-item"><a class="nav-link footer-link" href="{% url 'about' %}">Who We Are</a></li>
-                        <li class="list-inline-item"><a class="nav-link footer-link" href="{% url 'contact' %}">Contact Us</a></li>
+                        <li class="list-inline-item">
+                            <a href="https://www.facebook.com" target="_blank" class="social-icon" title="Follow us on Facebook"><i class="fa-brands fa-facebook"></i></a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="https://www.instagram.com" target="_blank" class="social-icon" title="Follow us on Instagram"><i class="fa-brands fa-square-instagram"></i></a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="http://www.twitter.com" target="_blank" class="social-icon" title="Follow us on Twitter"><i class="fa-brands fa-twitter"></i></a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="https://telegram.org/" target="_blank" class="social-icon" title="Join us on Telegram"><i class="fa-brands fa-telegram"></i></a>
+                        </li>
                     </ul>
-                </nav>
-            </div>
-            <div class="col-md-4 text-center text-md-end">
-                <ul class="list-inline mb-0">
-                    <li class="list-inline-item">
-                        <a href="https://www.facebook.com" target="_blank" class="social-icon" title="Follow us on Facebook"><i class="fa-brands fa-facebook"></i></a>
-                    </li>
-                    <li class="list-inline-item">
-                        <a href="https://www.instagram.com" target="_blank" class="social-icon" title="Follow us on Instagram"><i class="fa-brands fa-square-instagram"></i></a>
-                    </li>
-                    <li class="list-inline-item">
-                        <a href="http://www.twitter.com" target="_blank" class="social-icon" title="Follow us on Twitter"><i class="fa-brands fa-twitter"></i></a>
-                    </li>
-                    <li class="list-inline-item">
-                        <a href="https://telegram.org/" target="_blank" class="social-icon" title="Join us on Telegram"><i class="fa-brands fa-telegram"></i></a>
-                    </li>
-                </ul>
+                </div>
             </div>
         </div>
-    </div>
-</footer>
+    </footer>
     
-     <!--  Bootstrap JS and dependencies -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Bootstrap JS and dependencies -->
     <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     {% block extrascripts %}{% endblock %}
     <script>
-         
         AOS.init({
             duration: 1200,
             delay: 50,
@@ -167,16 +156,6 @@
 
         $(this).keypress(function (e) {
             idleTime = 0;
-        });
-
-        // Notification bar script
-        $(document).ready(function() {
-            if ($('.messages .alert').length > 0) {
-                $('#notification').addClass('show');
-                setTimeout(function() {
-                    $('#notification').removeClass('show');
-                }, 3000);
-            }
         });
     </script>
 </body>

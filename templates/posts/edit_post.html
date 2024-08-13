@@ -3,13 +3,48 @@
 {% block title %}Edit Post{% endblock %}
 
 {% block content %}
-<div class="container my-5">
-  <h1 class="mb-4">Edit Post</h1>
-  <form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Save Changes</button>
-  </form>
-  <a href="{% url 'view_post' post.slug %}" class="btn btn-secondary mt-3">Cancel</a>
+<div class="container-md container-contact bg-white rounded-3 box-shadow p-4 mt-5 mb-5" data-aos="fade-down">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <!-- Heading -->
+      <h2 class="text-center mb-4" style="color: black;">
+        Edit Post
+      </h2>
+      
+      <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+        {% csrf_token %}
+        
+        <!-- Apply the custom class for spacing and alignment -->
+        <div class="form-group-spacing">
+          {% for field in form %}
+            <div class="form-group">
+              {{ field.label_tag }}
+              {{ field }}
+              {% if field.errors %}
+                <div class="invalid-feedback d-block">
+                  {% for error in field.errors %}
+                    {{ error }}
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+        
+        {% if form.instance.featured_image %}
+          <div class="form-group mt-3">
+            <label for="image">Current Image:</label>
+            <img src="{{ form.instance.featured_image.url }}" alt="Current Image" class="img-thumbnail" style="max-width: 200px;">
+          </div>
+        {% endif %}
+        
+        <!-- Button Container with Flexbox -->
+        <div class="d-flex justify-content-between mt-3">
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+          <a href="{% url 'view_post' post.slug %}" class="btn btn-secondary">Cancel</a>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
 {% endblock %}
