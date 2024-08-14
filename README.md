@@ -1,10 +1,12 @@
 # Welcome to Leamington Spa Adventures Blog
 
-## A Community-Driven Photography and Exploration Blog
+## A Community-Driven Photography and Exploration Blog in West Midlands
 
 Leamington Spa Adventures Blog celebrates the beauty of Leamington Spa and the West Midlands through the lens of our talented community. We offer a platform for photographers and adventurers to share their stories, inspire others, and connect with like-minded individuals.
 
 [Link to Live Site](#)
+
+
 
 This project is created to showcase local beauty and foster community engagement through photography and storytelling.
 
@@ -293,13 +295,11 @@ Screenshots demonstrating these features can be found in the [Screenshots](stati
 - Make sure to resolve any deployment errors by adjusting the code as necessary.
 
 
-
 ## Resources
 - [Django Documentation](https://docs.djangoproject.com/)
 - [Bootstrap Documentation](https://getbootstrap.com/docs/)
 - [Cloudinary Documentation](https://cloudinary.com/documentation)
 - [Heroku Documentation](https://devcenter.heroku.com/categories/reference)
-
 
 
 ## Credits and Acknowledgements
