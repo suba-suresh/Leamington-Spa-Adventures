@@ -3,9 +3,10 @@ from django.contrib.auth.models import User
 from cloudinary.models import CloudinaryField
 from taggit.managers import TaggableManager
 from django.utils.text import slugify
-from django.dispatch import receiver 
+from django.dispatch import receiver
 from django.db.models.signals import post_save
 import random
+
 
 class Post(models.Model):
     STATUS_CHOICES = (
@@ -53,6 +54,7 @@ class Post(models.Model):
     def get_image_url(self):
         return self.image.url if self.image else 'path/to/default/image.jpg'
 
+
 class Comment(models.Model):
     post = models.ForeignKey(Post, related_name='comments', on_delete=models.CASCADE)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -69,9 +71,9 @@ class Comment(models.Model):
         super().delete(*args, **kwargs)
         post.update_comments_count()  # Update count after deleting a comment
 
-
     def __str__(self):
         return f'Comment by {self.author} on {self.post}'
+
 
 class Like(models.Model):
     post = models.ForeignKey(Post, related_name='likes', on_delete=models.CASCADE)
@@ -83,12 +85,12 @@ class Like(models.Model):
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
-        self.post.update_likes_count()  # Update count after saving a like
+        self.post.update_likes_count()
 
     def delete(self, *args, **kwargs):
         post = self.post
         super().delete(*args, **kwargs)
-        post.update_likes_count()  # Update count after deleting a like
+        post.update_likes_count()
 
     def __str__(self):
         return f'{self.user} likes {self.post}'
@@ -99,7 +101,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     bio = models.TextField(blank=True)
     profile_image = CloudinaryField('image', blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)  
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.user.username
