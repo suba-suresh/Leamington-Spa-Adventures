@@ -54,6 +54,7 @@ Our primary users are local photographers, bloggers, and adventure enthusiasts w
 - [#17](https://github.com/suba-suresh/Leamington-Spa-Adventures/issues/17) As a site user, I can manage my profile to keep my information up to date.
 - [#20](https://github.com/suba-suresh/Leamington-Spa-Adventures/issues/20) As a site user, I can draft posts before submission to refine my content.
 - [#21](https://github.com/suba-suresh/Leamington-Spa-Adventures/issues/21) As a site user, I can search posts using a search bar to find relevant content easily.
+- [#24](https://github.com/suba-suresh/Leamington-Spa-Adventures/issues/24) As a site user, I can submit a post for publication so that it can be reviewed by an admin before going live.
 
 ### As a Site Admin
 
@@ -65,6 +66,8 @@ Our primary users are local photographers, bloggers, and adventure enthusiasts w
 - [#16](https://github.com/suba-suresh/Leamington-Spa-Adventures/issues/16) As a site admin, I can restrict regular users from accessing the admin interface to secure the platform.
 - [#18](https://github.com/suba-suresh/Leamington-Spa-Adventures/issues/18) As a site admin, I can manage user profiles to ensure users comply with platform standards.
 - [#19](https://github.com/suba-suresh/Leamington-Spa-Adventures/issues/19) As a site admin, I can view and manage user profiles to oversee user activity and content.
+- [#25](https://github.com/suba-suresh/Leamington-Spa-Adventures/issues/25) As a site admin, I can review user-submitted posts so that I can approve or reject them based on content guidelines.
+- [#26](https://github.com/suba-suresh/Leamington-Spa-Adventures/issues/26) As a site admin, I can approve a user’s post so that it becomes publicly visible on the platform.
 
 
 
@@ -105,11 +108,11 @@ Description of the wireframes and how they guided the design.
   - **Hero Section**: Introduces the site with a welcome message and call-to-action buttons.
 
 - **Login Page**:
-  -  signup functionality allows users to register securely.
+  - Login functionality allows users to log in securely.
   - Successful login redirects users to the home page.
 
 - **Registration Page**:
-  -  login functionality allows users to log in securely.
+  - Signup functionality allows users to register securely.
   - Successful registration redirects users to the home page.
 
 - **Logout Page**:
@@ -118,19 +121,20 @@ Description of the wireframes and how they guided the design.
 
 - **Profile Page**:
   - Access requires user authentication.
-  - Users can edit their profile information (bio and title and profile images).
+  - Users can edit their profile information (bio, title, and profile images).
   - Profile editing is done through a form toggled by an "Edit Profile" button.
   - Users can create blog posts, including uploading images.
-  - After submitting a post, users are redirected to the dashboard page to view their  post.
-  - After Admin Approved the post, the post can be published to Blog list.
+  - After submitting a post, users are redirected to the dashboard page to view their post.
+  - After admin approval, the post can be published to the blog list.
 
 - **Blog**:
-  -Display a list of approved blog post details with likes, comments, authorname, and created date.
+  - Displays a list of approved blog post details with likes, comments, author name, and creation date.
   - Displays a paginated list of posts with featured images, titles, excerpts, and details.
   - Posts can be browsed by tags.
 
 - **Full Post View**:
-  - Includes featured image,  info, like and comments section.
+  - Includes a featured image, author info, like and comment sections.
+  - Users can interact with the post by liking or commenting if authenticated.
 
 - **About Page**:
   - Contains introductory paragraphs about the team, their passion, and mission.
@@ -142,21 +146,31 @@ Description of the wireframes and how they guided the design.
 - **Admin Panel**:
   - Manages blog posts with details such as title, slug, author, category, tags, status, and creation date.
   - Allows bulk status updates and filtering.
+  - Admins can approve or reject user-submitted posts.
+  - Admins can manage user accounts and profiles.
 
 - **User Dashboard**:
   - Provides statistics on the user's posts with CRUD functionality.
-  - Provide Update Personal details.
-  
+  - Allows users to update personal details such as username, bio, and profile images.
+  - Displays the status of submitted posts (pending, approved, rejected).
+
 - **Accounts Templates**:
-  - Handles user dashboard's, and user's Personal details on account management.
-  - Handles admin dashboard's, and admin's Personal details such as username, bio and profile images.
+  - Handles user dashboards and personal details for account management.
+  - Handles admin dashboards and personal details, such as username, bio, and profile images.
 
 - **Add/Edit Post - Form Validation**:
-  - Validates post fields with JavaScript and display the alert messages.
+  - Validates post fields with JavaScript and displays alert messages.
+  - Ensures required fields are filled out correctly before submission.
 
 - **Messages**:
   - Utilizes Django messages with Bootstrap toast components for user feedback.
+  - Displays success, error, and informational messages in response to user actions.
 
+- **Responsive Design**:
+  - Ensures all pages are fully responsive across various screen sizes, including mobile, tablet, and desktop.
+  - Navbar collapses to a burger menu on smaller screens.
+  - Content stacks vertically instead of horizontally on smaller screens.
+  - Blog post cards adjust to display fewer cards on smaller screens.
 
 ## Future Features
 - **Enhanced Search Functionality:** Implement a search bar to find specific content.
@@ -179,7 +193,7 @@ Description of the wireframes and how they guided the design.
 - [Bootstrap 5](https://blog.getbootstrap.com/2022/11/22/bootstrap-5-2-3/)
 - [Cloudinary](https://cloudinary.com/)
 - [Django](https://www.djangoproject.com/)
-- Postregesql
+- [Postgresql](https://www.postgresql.org/)
 - [Heroku](https://heroku.com)
 
 
@@ -209,36 +223,32 @@ I tested the website for responsiveness using Chrome's Developer Tools. Screensh
 Screenshots demonstrating these features can be found in the [Screenshots](static/images/screenshots/) section of the documentation.
 
 **Laptop**
-![Screenshot of profile page view on laptop]()
+![Screenshot of Home page view on laptop][Screenshots](static/images/screenshots/desktop-view.png)
 
 **Tablet**
-![Screenshot of profile page view on tablet]()
+![Screenshot of Home page view on tablet][Screenshots](static/images/screenshots/tab-view.png)
 
 **Mobile**
-![Screenshot of profile page view on mobile]()
+![Screenshot of Home page view on mobile][Screenshots](static/images/screenshots/mobile-view.png)
 
 ### Other Examples
 
 **Laptop**
-![Screenshot of about page view on laptop]()
+![Screenshot of about page view on laptop][Screenshots](static/images/screenshots/dashboard-desktop-view.png)
 
 **Tablet**
-![Screenshot of a blog view on tablet]()
+![Screenshot of a blog view on tablet][Screenshots](static/images/screenshots/dashboard-tab-view.png)
 
 **Mobile**
-![Screenshot of the home page view on mobile]()
+![Screenshot of the home page view on mobile][Screenshots](static/images/screenshots/dashboard-mobile-view.png)
 
 ### Validation
 - I used the [W3 HTML Validator](https://validator.w3.org/) to check the HTML on each of my site pages by Direct Input. I have resolved the necessary errors.
   ![HTML validation results](/static/images/screenshots/html-validation.png)  
   
-- I used the [W3 CSS Validator](https://jigsaw.w3.org/) to check my CSS script by Direct Input. I found no errors! There are 7 warnigns which are just flagging vendor extensions.
-
-![CSS validation results](/static/images/screenshots/css-validation.png)  
+- I used the [W3 CSS Validator](https://jigsaw.w3.org/) to check my CSS script by Direct Input. I found no errors! There are 7 warnigns which are just flagging vendor extensions. ![CSS validation results](/static/images/screenshots/css-validation.png)  
   
-- I used the [CI Python Linter](https://pep8ci.herokuapp.com/) to check all my python scripts. I found a few small errors like the below - mostly lines were too long or there was a missing blank space line. I have left some of the error messages as they are related to a too long line at the result of a comment.
-
-![Python Linter Result](/static/images/screenshots/Python-validation.png)
+- I used the [CI Python Linter](https://pep8ci.herokuapp.com/) to check all my python scripts. I found a few small errors like the below - mostly lines were too long or there was a missing blank space line. I have left some of the error messages as they are related to a too long line at the result of a comment. ![Python Linter Result](/static/images/screenshots/Python-validation.png)
 
 ## Known Bugs
 - **Image Upload Issue:** Conflicts with image handling on the Profile page.
@@ -290,18 +300,14 @@ Screenshots demonstrating these features can be found in the [Screenshots](stati
 - [Cloudinary Documentation](https://cloudinary.com/documentation)
 - [Heroku Documentation](https://devcenter.heroku.com/categories/reference)
 
-[Back to Top](#table-of-contents)
 
----
 
 ## Credits and Acknowledgements
 
 - **Code Institute** course content for providing the knowledge and guidance to build the project
-- GitHub user **sojourn** for sharing a best practice README structure
-- Course Facilitator **David Calikes** for his unwaving support and guidance during the process 
-- Tutor **Alexander* for his endless patience and support with trouble shooting issues
-- Tutor **Kevin Loughrey** for his helpful SME sessions and constant support
+- Course Facilitator **Alexander** for his unwaving support and guidance during the process and his endless patience and support with trouble shooting issues
+- Tutor **Kevin** for his helpful SME sessions and constant support
 - My fellow **cohort peers** for their support, help with trouble shooting issues and sharing the experience
 
 ##### [ Back to Top ](#table-of-contents)
-[Back to Top](#table-of-contents)
+
