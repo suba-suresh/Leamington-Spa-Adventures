@@ -75,7 +75,11 @@ Our primary users are local photographers, bloggers, and adventure enthusiasts w
 
 ### Database Planning
 
-I used Lucidchart to create my database entity relationship diagrams. Below you can see how each model relates to eachother [Database Diagram](static/images/database_digram_for_blog_post.jpg)
+I used Lucidchart to create my database entity relationship diagrams. Below you can see how each model relates to eachother
+**Database Diagram**
+![Database diagram for Blog Post](static/images/Database%20diagram%20for%20Blog%20Post.jpg)
+
+
 
 
 ## Agile Methodology for project planning
@@ -224,34 +228,52 @@ I tested the website for responsiveness using Chrome's Developer Tools. Screensh
 
 Screenshots demonstrating these features can be found in the [Screenshots](static/images/screenshots/) section of the documentation.
 
-**Laptop**
-![Screenshot of Home page view on laptop][Screenshots](static/images/screenshots/desktop-view.png)
-
-**Tablet**
-![Screenshot of Home page view on tablet][Screenshots](static/images/screenshots/tab-view.png)
-
-**Mobile**
-![Screenshot of Home page view on mobile][Screenshots](static/images/screenshots/mobile-view.png)
-
-### Other Examples
+### Home Page Views
 
 **Laptop**
-![Screenshot of about page view on laptop][Screenshots](static/images/screenshots/dashboard-desktop-view.png)
+![Screenshot of Home page view on laptop](static/images/screenshots/desktop%20view.png)
+
 
 **Tablet**
-![Screenshot of a blog view on tablet][Screenshots](static/images/screenshots/dashboard-tab-view.png)
+![Screenshot of Home page view on tablet](static/images/screenshots/tab%20view.png)
+
 
 **Mobile**
-![Screenshot of the home page view on mobile][Screenshots](static/images/screenshots/dashboard-mobile-view.png)
+![Screenshot of Home page view on mobile](static/images/screenshots/mobile%20view.png)
+
+
+
+### Dashboard Views
+
+**Laptop**
+![Screenshot of dashboard view on laptop](static/images/screenshots/dashboard%20desktop%20view.png)
+
+
+**Tablet**
+![Screenshot of dashboard view on tablet](static/images/screenshots/dashboard%20tab%20view.png)
+
+
+**Mobile**
+![Screenshot of dashboard view on mobile](static/images/screenshots/dashboard%20mobile%20view.png)
+
+
 
 ### Validation
-- I used the [W3 HTML Validator](https://validator.w3.org/) to check the HTML on each of my site pages by Direct Input. I have resolved the necessary errors.
-  ![HTML validation results](/static/images/screenshots/html-validation.png)  
-  
-- I used the [W3 CSS Validator](https://jigsaw.w3.org/) to check my CSS script by Direct Input. I found no errors! There are 7 warnigns which are just flagging vendor extensions. ![CSS validation results](/static/images/screenshots/css-validation.png)  
-  
-- I used the [CI Python Linter](https://pep8ci.herokuapp.com/) to check all my python scripts. I found a few small errors like the below - mostly lines were too long or there was a missing blank space line. I have left some of the error messages as they are related to a too long line at the result of a comment. ![Python Linter Result](/static/images/screenshots/python-validation.png)
 
+- I used the [W3 HTML Validator](https://validator.w3.org/) to check the HTML on each of my site pages by Direct Input. I have resolved the necessary errors.
+  ![HTML validation results](static/images/screenshots/html%20validation.png)
+  
+  
+  
+- I used the [W3 CSS Validator](https://jigsaw.w3.org/) to check my CSS script by Direct Input. I found no errors! There are 7 warnings which are just flagging vendor extensions. 
+  ![CSS validation results](static/images/screenshots/css%20validation.png)
+
+  
+
+- I used the [Python Validator](https://example.com/) to check my Python code. Here is the result:
+  ![Python validation results](static/images/screenshots/python%20validation.png)
+
+  
 ## Known Bugs
 - **Image Upload Issue:** Conflicts with image handling on the Profile page.
 - ** Moderation:**  slow to update when delete the comments and likes.
