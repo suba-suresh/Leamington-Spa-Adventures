@@ -4,7 +4,7 @@
 
 Leamington Spa Adventures Blog celebrates the beauty of Leamington Spa and the West Midlands through the lens of our talented community. We offer a platform for photographers and adventurers to share their stories, inspire others, and connect with like-minded individuals.
 
-[Link to Live Site](#)
+[Link to Live Site](https://leamington-blogs-88e5f6d83aed.herokuapp.com/)
 
 
 
@@ -89,7 +89,7 @@ To keep track of progress, I used a kanban board divided into following sections
 By using agile methodology, I was able to stay organized and focused on delivering the most important features, while also allowing flexibility for future development
 
 ### Wireframes
-Include wireframes if available.
+I used Balsamiq to create my wireframes.
 
 Description of the wireframes and how they guided the design.
 
@@ -250,7 +250,7 @@ Screenshots demonstrating these features can be found in the [Screenshots](stati
   
 - I used the [W3 CSS Validator](https://jigsaw.w3.org/) to check my CSS script by Direct Input. I found no errors! There are 7 warnigns which are just flagging vendor extensions. ![CSS validation results](/static/images/screenshots/css-validation.png)  
   
-- I used the [CI Python Linter](https://pep8ci.herokuapp.com/) to check all my python scripts. I found a few small errors like the below - mostly lines were too long or there was a missing blank space line. I have left some of the error messages as they are related to a too long line at the result of a comment. ![Python Linter Result](/static/images/screenshots/Python-validation.png)
+- I used the [CI Python Linter](https://pep8ci.herokuapp.com/) to check all my python scripts. I found a few small errors like the below - mostly lines were too long or there was a missing blank space line. I have left some of the error messages as they are related to a too long line at the result of a comment. ![Python Linter Result](/static/images/screenshots/python-validation.png)
 
 ## Known Bugs
 - **Image Upload Issue:** Conflicts with image handling on the Profile page.
